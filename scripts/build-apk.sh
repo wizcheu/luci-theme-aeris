@@ -36,6 +36,7 @@ PY
 
 echo 'Updating SDK-pinned package feeds.'
 ./scripts/feeds update -a
+grep -q '^Package: luci-theme-aeris$' feeds/aeris.index || { echo 'Aeris is missing from the SDK package index.' >&2; exit 1; }
 ./scripts/feeds install -p aeris -f luci-theme-aeris
 test -f package/feeds/aeris/luci-theme-aeris/Makefile
 cat >> .config <<'CONFIG'
