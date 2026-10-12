@@ -1,0 +1,8 @@
+{% if (!blank_page): %}
+  </main>
+  <footer class="aeris-footer"><span>Aeris 1.0.0 <span aria-hidden="true">·</span> <a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">{{ version.luciname }}</a></span><span>{{ version.distname }} {{ version.distversion }}</span></footer>
+ </div>
+ <script>L.require('menu-aeris').catch(function(error) { var target = document.getElementById('aeris-navigation'); target.textContent = error.message || String(error); });</script>
+{% endif %}
+</body>
+</html>

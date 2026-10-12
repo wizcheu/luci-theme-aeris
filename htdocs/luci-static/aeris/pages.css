@@ -1,0 +1,88 @@
+/* Reusable page compositions for the Aeris design preview. */
+.aeris-page-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:26px; }
+.aeris-page-heading p,.aeris-list-heading p { margin:8px 0 0; color:var(--aeris-muted); font-size:14px; }
+.aeris-settings-card { display:grid; grid-template-columns:208px minmax(0,1fr); padding:30px; gap:38px; background:var(--aeris-background); border:1px solid var(--aeris-border); border-radius:16px; margin:0; }
+.aeris-settings-nav { display:flex; flex-direction:column; align-items:stretch; gap:6px; padding-right:10px; }
+.aeris-settings-nav button { display:flex; align-items:center; gap:13px; border:0; background:transparent; color:var(--aeris-muted); border-radius:10px; min-height:52px; padding:12px 15px; text-align:left; font-size:14px; font-weight:600; cursor:pointer; }
+.aeris-settings-nav button:hover { background:var(--aeris-subtle); }
+.aeris-settings-nav button[aria-selected="true"] { background:var(--aeris-subtle); color:var(--aeris-foreground); }
+.aeris-settings-content { min-width:0; max-width:900px; }
+.aeris-settings-title { margin:0 0 28px; }
+.aeris-settings-title h3 { margin:0 0 7px; }
+.aeris-settings-title p { color:var(--aeris-muted); margin:0; }
+.aeris-device-summary { display:flex; align-items:center; gap:14px; padding-bottom:26px; margin-bottom:28px; border-bottom:1px solid var(--aeris-border); }
+.aeris-device-symbol { display:grid; place-items:center; width:56px; height:56px; border-radius:14px; background:var(--aeris-blue-soft); color:var(--aeris-accent); }
+.aeris-device-symbol .ae-icon { width:28px; height:28px; }
+.aeris-device-summary strong { display:block; font-size:16px; font-weight:700; }
+.aeris-device-summary div > span { display:block; color:var(--aeris-muted); font-size:12px; margin-top:4px; }
+.aeris-device-summary > .aeris-tag { margin-left:auto; }
+.aeris-form-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; margin-bottom:24px; }
+.aeris .aeris-form-grid .cbi-value { margin-bottom:0; }
+.aeris-settings-panel > .cbi-value { margin-bottom:28px; }
+.aeris-settings-footer { border-top:1px solid var(--aeris-border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-top:30px; padding-top:24px; }
+.aeris-settings-footer > span { color:var(--aeris-muted); font-size:12px; }
+.aeris-settings-footer > div { display:flex; gap:8px; margin-left:auto; }
+.aeris-switch-row { display:flex; align-items:center; gap:24px; justify-content:space-between; padding:4px 0 24px; margin:0 0 24px; border-bottom:1px solid var(--aeris-border); cursor:pointer; }
+.aeris-switch-row strong { display:block; font-size:14px; font-weight:600; }
+.aeris-switch-row small { display:block; font-size:12px; color:var(--aeris-muted); margin-top:5px; }
+.aeris-switch-row .cbi-checkbox { flex-shrink:0; }
+.aeris-appearance-sample { padding:28px; background:var(--aeris-subtle); border-radius:14px; }
+.aeris-appearance-sample h4 { margin:22px 0 8px; font-size:20px; }
+.aeris-appearance-sample p { color:var(--aeris-muted); }
+.aeris-color-dot { display:inline-block; width:24px; height:24px; background:var(--aeris-primary); border:3px solid var(--aeris-background); border-radius:50%; margin-right:5px; }
+.aeris-color-dot.green { background:#48b79b; }.aeris-color-dot.purple { background:#9871d0; }
+.aeris .cbi-dynlist:has(.aeris-list-remove) > .item::after { display:none; }
+.aeris-list-remove { position:absolute; right:5px; top:5px; border:0; background:transparent; color:var(--aeris-muted); border-radius:8px; width:34px; height:34px; font-size:21px; cursor:pointer; }
+.aeris-list-remove:hover { background:var(--aeris-hover); }
+.aeris .aeris-list-card { padding:28px 0 0; overflow:hidden; }
+.aeris-list-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:0 28px; margin-bottom:30px; }
+.aeris-list-heading h2 { font-size:24px; }
+.aeris-list-heading p { display:flex; align-items:center; flex-wrap:wrap; gap:10px; font-size:13px; }
+.aeris-list-toolbar { padding:0 28px; margin-bottom:22px; display:flex; gap:18px; }
+.aeris-search-field { position:relative; flex:1; min-width:0; }
+.aeris-search-field > .ae-icon { position:absolute; top:15px; left:15px; color:var(--aeris-muted); pointer-events:none; }
+.aeris .aeris-search-field input { width:100%; padding-left:45px; }
+.aeris-list-toolbar select { min-width:150px; }
+.aeris-table-wrap { overflow-x:auto; }
+.aeris .aeris-interface-table { white-space:nowrap; display:table; }
+.aeris .aeris-interface-table :is(.td,.th):first-child { padding-left:28px; }
+.aeris .aeris-interface-table :is(.td,.th):last-child { padding-right:28px; }
+.aeris .aeris-interface-table .td { padding-top:20px; padding-bottom:20px; }
+.aeris-name-cell { display:flex; align-items:center; gap:14px; }
+.aeris-name-cell strong { display:block; font-weight:700; }
+.aeris-name-cell small { display:block; margin-top:3px; }
+.aeris-table-symbol { display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:var(--aeris-subtle); color:var(--aeris-muted); }
+.aeris-table-symbol.blue { background:var(--aeris-blue-soft); color:var(--aeris-accent); }
+.aeris-table-secondary { display:block; margin-top:3px; }
+.aeris-address { color:var(--aeris-muted); font-size:13px; }
+.aeris-list-footer { display:flex; justify-content:space-between; gap:16px; border-top:1px solid var(--aeris-border); padding:22px 28px; font-size:12px; color:var(--aeris-muted); }
+.aeris-no-results { text-align:center; padding:50px 24px; color:var(--aeris-muted); }
+.aeris-subtle-note { display:flex; gap:9px; align-items:center; color:var(--aeris-muted); font-size:12px; }
+.aeris-subtle-note .ae-icon { width:17px; height:17px; }
+.aeris-component-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.aeris .aeris-component-card { margin:0; }
+.aeris .aeris-component-card h3 { margin-bottom:6px; }
+.aeris-card-description { color:var(--aeris-muted); margin:0 0 28px; font-size:13px!important; }
+.aeris-example-stack { display:flex; flex-direction:column; gap:25px; }
+.aeris-example-row { display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:24px; }
+.aeris-example-stack .aeris-example-row { margin:0; }
+.aeris-choice { display:inline-flex; align-items:center; gap:10px; cursor:pointer; }
+.aeris-component-card .alert-message { display:flex; align-items:center; gap:12px; }
+.aeris-component-card .alert-message:last-child { margin-bottom:0; }
+.aeris-tab-preview { background:var(--aeris-subtle); border-radius:12px; padding:20px; color:var(--aeris-muted); font-size:13px!important; margin:0 0 26px; }
+.aeris-component-card .cbi-tabmenu { margin-bottom:20px; }
+.aeris .aeris-component-card .cbi-tabmenu > li > a { padding-left:15px; padding-right:15px; }
+.aeris-toast { position:fixed; z-index:1000; right:28px; bottom:28px; display:flex; align-items:center; gap:12px; max-width:calc(100vw - 32px); padding:17px 22px; background:var(--aeris-background); border:1px solid var(--aeris-border); border-radius:14px; box-shadow:0 10px 40px #0002; color:var(--aeris-foreground); font-size:14px; }
+.aeris-toast .ae-icon { color:var(--aeris-green); }
+.aeris-native-grid { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:24px; align-items:start; }
+.aeris-native-grid .cbi-section { margin:0 0 24px; }
+@media(max-width:1200px) { .aeris-settings-card { grid-template-columns:176px minmax(0,1fr); gap:26px; padding:26px; } .aeris-settings-nav { padding-right:0; } }
+@media(max-width:1000px) { .aeris-settings-card { grid-template-columns:1fr; gap:26px; } .aeris-settings-nav { flex-direction:row; overflow:auto; gap:8px; padding-bottom:18px; border-bottom:1px solid var(--aeris-border); } .aeris-settings-nav button { white-space:nowrap; flex-shrink:0; min-height:44px; font-size:13px; } .aeris-component-grid,.aeris-native-grid { grid-template-columns:1fr; } }
+@media(max-width:600px) { .aeris-page-heading { align-items:flex-start; gap:12px; }.aeris-page-heading > .aeris-tag { display:none; } .aeris-settings-card { padding:20px; } .aeris-form-grid { grid-template-columns:1fr; } .aeris-settings-nav { margin:0 -4px; } .aeris-settings-nav button { padding:10px; } .aeris-settings-nav .ae-icon { width:17px; } .aeris-device-summary { flex-wrap:wrap; gap:10px; } .aeris-device-symbol { width:46px; height:46px; } .aeris-device-summary > .aeris-tag { margin-left:56px; } .aeris-list-heading { padding:0 20px; align-items:flex-start; flex-direction:column; gap:18px; } .aeris-list-toolbar { padding:0 20px; flex-direction:column; gap:12px; } .aeris-list-toolbar select { width:100%; } .aeris-list-footer { padding:18px 20px; flex-wrap:wrap; } .aeris-subtle-note { align-items:flex-start; line-height:1.8; } .aeris-subtle-note .ae-icon { margin-top:2px; flex-shrink:0; } .aeris-settings-footer { margin-top:24px; } .aeris-settings-footer > div { width:100%; justify-content:flex-end; }.aeris-toast { right:16px; bottom:16px; } }
+.aeris-control-examples { display:flex; flex-direction:column; gap:26px; }
+.aeris-control-example { display:flex; flex-direction:column; align-items:flex-start; gap:11px; }
+.aeris-control-label { font-size:12px; color:var(--aeris-muted); font-weight:600; }
+.aeris-control-inline { display:flex; align-items:center; gap:13px; }
+.aeris-control-inline .aeris-select { min-width:156px; }
+.aeris-control-result { font-size:12px!important; color:var(--aeris-muted); margin:0; }
+@media(max-width:600px){.aeris .aeris-control-examples .aeris-segment-item{padding-left:12px;padding-right:12px;}}

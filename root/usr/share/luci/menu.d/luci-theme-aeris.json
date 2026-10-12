@@ -1,0 +1,8 @@
+{
+ "admin/status/aeris": {
+  "title": "Aeris 概览",
+  "order": 2,
+  "action": {"type": "view", "path": "aeris/overview"},
+  "depends": {"acl": ["luci-theme-aeris"]}
+ }
+}

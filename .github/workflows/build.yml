@@ -1,0 +1,112 @@
+name: Build and release Aeris
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aeris-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  validate-and-ipk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate release version, source and documentation
+        run: python3 scripts/check.py
+      - name: Test package lifecycle and traffic counters
+        run: npm test
+      - name: Check JavaScript and shell syntax
+        run: |
+          find htdocs preview -name '*.js' -type f -print0 | xargs -0 -n1 node --check
+          sh -n root/etc/uci-defaults/30_luci-theme-aeris
+      - name: Compile templates with pinned ucode
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake libjson-c-dev
+          git clone https://github.com/jow-/ucode.git "$RUNNER_TEMP/ucode-src"
+          git -C "$RUNNER_TEMP/ucode-src" checkout cef2a90f57835c38ab85157a07c4ab3c12925307
+          cmake -S "$RUNNER_TEMP/ucode-src" -B "$RUNNER_TEMP/ucode-build" -DDEBUG_SUPPORT=OFF -DFFI_SUPPORT=OFF -DDIGEST_SUPPORT=OFF
+          cmake --build "$RUNNER_TEMP/ucode-build" --target ucode fs_lib -j2
+          "$RUNNER_TEMP/ucode-build/ucode" -L "$RUNNER_TEMP/ucode-build" -L "$GITHUB_WORKSPACE/preview/stubs" scripts/render-preview.uc
+          git diff --exit-code -- preview/generated
+      - name: Build architecture-independent IPK
+        run: |
+          python3 scripts/build.py
+          git archive --format=tar.gz --prefix=luci-theme-aeris/ HEAD > dist/luci-theme-aeris-source.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aeris-ipk
+          path: dist/
+          if-no-files-found: error
+
+  build-apk:
+    needs: validate-and-ipk
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p sdk-artifacts
+      - name: Build with official OpenWrt 25.12 SDK
+        uses: openwrt/gh-action-sdk@f5813d30eeef3534b58ac7e79c5d8842b6035434
+        env:
+          ARCH: x86_64-25.12.5
+          FEEDNAME: aeris
+          PACKAGES: luci-theme-aeris
+          ARTIFACTS_DIR: ${{ github.workspace }}/sdk-artifacts
+          V: s
+      - name: Collect universal APK
+        run: |
+          mkdir -p dist
+          package=$(find sdk-artifacts/bin/packages -type f -name 'luci-theme-aeris-*.apk' -print -quit)
+          test -n "$package"
+          cp "$package" dist/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aeris-apk
+          path: dist/*.apk
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: aeris-sdk-logs
+          path: sdk-artifacts/logs/
+          if-no-files-found: ignore
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [validate-and-ipk, build-apk]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: aeris-ipk
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: aeris-apk
+          path: dist
+      - name: Generate release checksums
+        working-directory: dist
+        run: sha256sum *.ipk *.apk *.tar.gz manifest.json > SHA256SUMS
+      - name: Publish v1.0.0 and later tagged releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --title "Aeris $GITHUB_REF_NAME" --notes-file docs/release-notes.md

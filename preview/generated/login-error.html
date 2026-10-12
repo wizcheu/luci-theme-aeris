@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn" data-darkmode="false">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="color-scheme" content="light dark">
+ <meta name="darkreader-lock">
+ <title>OpenWrt | 登录</title>
+ <script src="/luci-static/aeris/appearance.js"></script>
+ <link rel="stylesheet" href="/luci-static/aeris/compat.css">
+ <link rel="stylesheet" href="/luci-static/aeris/aeris.css">
+ <link rel="stylesheet" href="/luci-static/aeris/dashboard.css">
+ <link rel="stylesheet" href="/luci-static/aeris/pages.css">
+ <link rel="stylesheet" href="/luci-static/aeris/router-pages.css">
+ <link rel="stylesheet" href="/luci-static/aeris/controls.css">
+ <script src="/luci-static/aeris/controls.js"></script>
+ <link rel="stylesheet" href="/luci-static/aeris/ui.css">
+ <script src="/luci-static/aeris/ui.js"></script>
+ <link rel="icon" href="/luci-static/aeris/mark.svg" type="image/svg+xml">
+ <script src="/cgi-bin/luci/admin/translations/zh-cn"></script>
+ <script src="/luci-static/resources/cbi.js"></script>
+ <script defer src="/luci-static/aeris/shell.js"></script>
+</head>
+<body class="aeris lang_zh-cn aeris-auth" data-page="admin">
+<main class="aeris-login">
+ <div class="aeris-login-brand"><span class="aeris-mark" aria-hidden="true"></span><span>Aeris<span class="aeris-muted">.</span></span></div>
+ <section class="aeris-login-card" aria-labelledby="aeris-login-title">
+  <h1 id="aeris-login-title">欢迎回来</h1>
+  <p>输入管理员账号，开始管理你的网络。</p>
+<div class="alert-message error" role="alert">用户名或密码错误，请重试。</div>  <form method="post">
+   <label for="luci_username">用户名</label>
+   <input id="luci_username" name="luci_username" type="text" autocomplete="username" value="root" required>
+   <label for="luci_password">密码</label>
+   <div class="control-group"><input id="luci_password" name="luci_password" type="password" autocomplete="current-password" autofocus><button type="button" class="cbi-button" data-aeris-password aria-label="显示密码"><svg class="ae-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+   <button class="btn cbi-button-apply" type="submit">登录</button>
+  </form>
+ </section>
+ <p class="aeris-login-footer">OpenWrt 24.10.5</p>
+</main>
+</body>
+</html>
