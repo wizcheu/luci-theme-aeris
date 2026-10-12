@@ -65,13 +65,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential clang flex bison g++ gawk gcc-multilib gettext git libncurses-dev libssl-dev python3 python3-setuptools rsync unzip zlib1g-dev zstd
-      - uses: actions/cache@v6.1.0
+      - uses: actions/cache/restore@v6.1.0
+        id: sdk-cache
         with:
           path: ${{ runner.temp }}/aeris-sdk-cache
           key: openwrt-sdk-25.12.5-x86-64-0c8df0151a1e88fe
       - name: Download and verify pinned OpenWrt SDK
         timeout-minutes: 10
         run: bash scripts/download-sdk.sh "$RUNNER_TEMP/aeris-sdk-cache" "$RUNNER_TEMP/aeris-sdk"
+      - uses: actions/cache/save@v6.1.0
+        if: steps.sdk-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ runner.temp }}/aeris-sdk-cache
+          key: openwrt-sdk-25.12.5-x86-64-0c8df0151a1e88fe
       - name: Build APK with official SDK
         run: bash scripts/build-apk.sh "$RUNNER_TEMP/aeris-sdk" "$GITHUB_WORKSPACE/sdk-artifacts"
       - uses: actions/upload-artifact@v7.0.2

@@ -17,13 +17,15 @@ aeris_collect_logs() {
 trap aeris_collect_logs EXIT
 
 # Preserve SDK-pinned revisions while using the official GitHub feed mirrors.
-python3 - "$source_dir" <<'PY'
+mkdir -p aeris-feed
+ln -s "$source_dir" aeris-feed/luci-theme-aeris
+python3 - "$PWD/aeris-feed" <<'PY'
 from pathlib import Path
 import sys
 lines=[]
 for line in Path('feeds.conf.default').read_text().splitlines():
     parts=line.split()
-    if len(parts)<3 or parts[1] not in {'luci','packages'}:
+    if len(parts)<3 or parts[0].startswith('#'):
         continue
     for prefix in ['https://git.openwrt.org/feed/', 'https://git.openwrt.org/project/', 'https://git.openwrt.org/openwrt/']:
         line=line.replace(prefix, 'https://github.com/openwrt/')
@@ -32,9 +34,10 @@ lines.append('src-link aeris '+sys.argv[1])
 Path('feeds.conf').write_text('\n'.join(lines)+'\n')
 PY
 
-echo 'Updating SDK-pinned LuCI and packages feeds.'
+echo 'Updating SDK-pinned package feeds.'
 ./scripts/feeds update -a
 ./scripts/feeds install -p aeris -f luci-theme-aeris
+test -f package/feeds/aeris/luci-theme-aeris/Makefile
 cat >> .config <<'CONFIG'
 CONFIG_ALL=n
 CONFIG_ALL_KMODS=n
