@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.12'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '22'
       - name: Validate release version, source and documentation
@@ -34,6 +34,7 @@ jobs:
         run: |
           find htdocs preview -name '*.js' -type f -print0 | xargs -0 -n1 node --check
           sh -n root/etc/uci-defaults/30_luci-theme-aeris
+          bash -n scripts/download-sdk.sh scripts/build-apk.sh
       - name: Compile templates with pinned ucode
         run: |
           sudo apt-get update
@@ -48,7 +49,7 @@ jobs:
         run: |
           python3 scripts/build.py
           git archive --format=tar.gz --prefix=luci-theme-aeris/ HEAD > dist/luci-theme-aeris-source.tar.gz
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: aeris-ipk
           path: dist/
@@ -59,28 +60,26 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-      - run: mkdir -p sdk-artifacts
-      - name: Build with official OpenWrt 25.12 SDK
-        uses: openwrt/gh-action-sdk@f5813d30eeef3534b58ac7e79c5d8842b6035434
-        env:
-          ARCH: x86_64-25.12.5
-          FEEDNAME: aeris
-          PACKAGES: luci-theme-aeris
-          ARTIFACTS_DIR: ${{ github.workspace }}/sdk-artifacts
-          V: s
-      - name: Collect universal APK
+      - uses: actions/checkout@v7.0.1
+      - name: Install SDK build dependencies
         run: |
-          mkdir -p dist
-          package=$(find sdk-artifacts/bin/packages -type f -name 'luci-theme-aeris-*.apk' -print -quit)
-          test -n "$package"
-          cp "$package" dist/
-      - uses: actions/upload-artifact@v4
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang flex bison g++ gawk gcc-multilib gettext git libncurses-dev libssl-dev python3 python3-setuptools rsync unzip zlib1g-dev zstd
+      - uses: actions/cache@v6.1.0
+        with:
+          path: ${{ runner.temp }}/aeris-sdk-cache
+          key: openwrt-sdk-25.12.5-x86-64-0c8df0151a1e88fe
+      - name: Download and verify pinned OpenWrt SDK
+        timeout-minutes: 10
+        run: bash scripts/download-sdk.sh "$RUNNER_TEMP/aeris-sdk-cache" "$RUNNER_TEMP/aeris-sdk"
+      - name: Build APK with official SDK
+        run: bash scripts/build-apk.sh "$RUNNER_TEMP/aeris-sdk" "$GITHUB_WORKSPACE/sdk-artifacts"
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: aeris-apk
-          path: dist/*.apk
+          path: sdk-artifacts/*.apk
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: failure()
         with:
           name: aeris-sdk-logs
@@ -94,12 +93,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/download-artifact@v8.0.2
         with:
           name: aeris-ipk
           path: dist
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8.0.2
         with:
           name: aeris-apk
           path: dist

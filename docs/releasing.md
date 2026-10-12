@@ -20,7 +20,7 @@ python3 scripts/build.py
 2. 测试安装包结构、可重复性、主题注册与卸载、流量计算和异常采样。
 3. 使用固定版本 ucode 编译模板，检查生成页面是否与源码一致。
 4. 生成通用 `.ipk` 和源码压缩包。
-5. 使用固定提交的官方 [OpenWrt SDK Action](https://github.com/openwrt/gh-action-sdk) 和 OpenWrt 25.12.5 SDK 生成 `.apk`。
+5. 下载并校验固定 SHA256 的官方 [OpenWrt 25.12.5 SDK](https://downloads.openwrt.org/releases/25.12.5/targets/x86/64/)，使用 SDK 固定的 feed 版本生成 `.apk`。
 6. 版本标签触发的构建全部成功后，生成 `SHA256SUMS` 并创建 GitHub Release，上传安装包、源码和 IPK 文件清单。
 
 普通分支提交仅产生 Actions artifacts；推送版本标签才发布 Release。GitHub Release 是给用户长期下载的入口，Actions artifacts 用于构建检查。参考 [GitHub Releases 文档](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)。
@@ -50,3 +50,9 @@ git push origin v1.0.0
 `LUCI_PKGARCH=all`，主题不含 CPU 架构相关代码。APK 使用 SDK 正式打包，IPK 可由独立脚本打包。也可以把本仓库放到对应 OpenWrt 构建树的 `package/luci-theme-aeris`，更新并安装 LuCI feed 后选中主题进行构建。
 
 保留原生 LuCI 表单和 RPC 权限边界，避免把 `preview/` 的样本或模拟操作带入发布包。
+
+## SDK 下载与故障定位
+
+下载和编译为独立步骤。SDK 优先从 downloads.openwrt.org 下载；连接、总时长和低速传输均有超时，失败后重试并尝试官方镜像。下载进度直接显示在 Actions 日志中；SDK 压缩包缓存按版本和校验值隔离，每次使用缓存仍检查 SHA256。
+
+校验值固定在 `scripts/download-sdk.sh`，来源为上述官方目录的 `sha256sums`。更新 SDK 时必须同时更新文件名、校验值和缓存键。`scripts/build-apk.sh` 只构建主题，失败时保留 SDK 构建日志。
