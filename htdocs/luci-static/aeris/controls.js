@@ -76,9 +76,10 @@
    trigger.setAttribute('aria-activedescendant',id+'-option-'+index);
    var option=optionNodes[index];if(option&&popup){if(option.offsetTop<popup.scrollTop)popup.scrollTop=option.offsetTop;else if(option.offsetTop+option.offsetHeight>popup.scrollTop+popup.clientHeight)popup.scrollTop=option.offsetTop+option.offsetHeight-popup.clientHeight;}
   }
-  function setValue(next,settings){if(!items.some(function(item){return item.value===next;}))return false;value=next;close();update();if(settings?.emit)options.onChange?.(value);return true;}
+  function setValue(next,settings){if(!settings?.allowMissing&&!items.some(function(item){return item.value===next;}))return false;value=next;close();update();if(settings?.emit)options.onChange?.(value);return true;}
   function choose(index){if(items[index].disabled)return;var next=items[index].value;close();trigger.focus();setValue(next,{emit:next!==value});}
   function open(){
+   options.onOpen?.();
    if(disabled||!items.length)return;
    if(popup)return;
    closeAll();activeDropdown={element:element,close:close};
@@ -108,7 +109,7 @@
     event.preventDefault();var now=Date.now();searchText=(now-lastTyped<650?searchText:'')+event.key.toLocaleLowerCase();lastTyped=now;if(!popup)open();var match=enabled.find(function(i){return String(items[i].label).toLocaleLowerCase().startsWith(searchText);});if(match!==undefined)focus(match);
    }
   });
-  update();return {element:element,getValue:function(){return value;},setValue:setValue,setDisabled:function(next){disabled=!!next;if(disabled)close();update();},open:open,close:close,destroy:function(){close();element.remove();}};
+  update();return {element:element,getValue:function(){return value;},setValue:setValue,setItems:function(next){close();items=normalized(next);update();},setDisabled:function(next){disabled=!!next;if(disabled)close();update();},open:open,close:close,destroy:function(){close();element.remove();}};
  }
  window.AerisControls=Object.freeze({segment:createSegment,select:createSelect,closeAll:closeAll});
 }());

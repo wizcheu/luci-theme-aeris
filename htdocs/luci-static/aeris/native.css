@@ -5,6 +5,68 @@
 :root[data-darkmode="true"] {
  --aeris-select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bdc6d5' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }
+/* The header shows authenticated data only; polling remains the native toggle. */
+.aeris-user { font-size:13px; font-weight:600; }
+.aeris-user > svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; }
+.aeris[data-page="admin-status-channel_analysis"] .cbi-title-section { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
+.aeris[data-page="admin-status-channel_analysis"] .cbi-title-field { margin:0; }
+.aeris[data-page="admin-status-channel_analysis"] .cbi-title-buttons .spinning > .aeris-native-action-icon { display:none; }
+.aeris-topbar #indicators > [data-indicator="poll-status"] { padding-inline:14px; color:var(--aeris-muted); background:var(--aeris-subtle); border:1px solid var(--aeris-border); }
+.aeris-topbar #indicators > [data-indicator="poll-status"]::before { content:''; width:6px; height:6px; margin-right:8px; border-radius:50%; background:var(--aeris-green); }
+.aeris-topbar #indicators > [data-indicator="poll-status"][data-style="inactive"]::before { background:var(--aeris-muted); }
+.aeris-topbar #indicators > [data-indicator="poll-status"]:hover { color:var(--aeris-foreground); background:var(--aeris-hover); }
+/* One action family: primary apply, outlined save, plain reset; no mixed icons. */
+.aeris .cbi-page-actions { gap:12px; padding-top:24px; }
+.aeris .cbi-page-actions::after { display:none; }
+.aeris .cbi-page-actions .cbi-button { min-width:88px; min-height:40px; height:40px; padding:8px 20px; text-align:center; font-weight:600; background-image:none; }
+.aeris .cbi-page-actions .cbi-button > .aeris-native-action-icon { display:none; }
+.aeris .cbi-page-actions .cbi-button-save { color:var(--aeris-foreground); border:1px solid var(--aeris-control-border); background:var(--aeris-background); }
+.aeris .cbi-page-actions .cbi-button-save:hover { background:var(--aeris-subtle); border-color:var(--aeris-control-hover)!important; }
+.aeris .cbi-page-actions .cbi-button-apply { color:#fff; background:var(--aeris-primary); border-color:transparent; }
+.aeris .cbi-page-actions .cbi-button-reset { color:var(--aeris-foreground); background:transparent; border-color:transparent; }
+.aeris .cbi-page-actions .cbi-button-reset:hover { background:var(--aeris-subtle); }
+.aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply { min-width:184px; gap:0; }
+.aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply > ul:not(.dropdown) { flex:1; width:100%; margin:0!important; padding:0 42px; justify-content:center; }
+.aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply > ul:not(.dropdown) > li { padding:0; text-align:center; line-height:38px; }
+.aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply > .open { position:absolute; inset:0 0 0 auto; width:38px; margin:0; border-left:1px solid #ffffff40; background:none; }
+.aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply > .open::after { content:''; width:6px; height:6px; margin:auto; border:solid currentColor; border-width:0 1.8px 1.8px 0; transform:translateY(-2px) rotate(45deg); }
+.aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply > ul.dropdown { left:auto; right:0; min-width:100%; text-align:left; }
+/* Radio details and SSID details have separate, evenly spaced reading areas. */
+.aeris .aeris-wireless-card .ifacebox-body { padding:20px; }
+.aeris .aeris-wireless-card .ifacebox-body > span { display:grid; gap:8px; }
+.aeris .aeris-wireless-card .ifacebox-body > span > br,.aeris .aeris-wireless-card .ifacebadge > span > br { display:none; }
+.aeris .aeris-wireless-card .nowrap { display:flex; align-items:baseline; gap:12px; white-space:normal; overflow-wrap:anywhere; line-height:1.65; }
+.aeris .aeris-wireless-card .nowrap > strong { flex:0 0 76px; color:var(--aeris-muted); font-size:13px; font-weight:500; }
+.aeris .aeris-wireless-card .ifacebox-body > div { display:grid; gap:12px; margin-top:20px; }
+.aeris .aeris-wireless-card .ifacebadge { display:grid; grid-template-columns:20px minmax(0,1fr); align-items:start; gap:12px; margin:0; padding:16px; border:0; border-radius:12px; background:var(--aeris-subtle); font-size:13px; line-height:1.65; }
+.aeris .aeris-wireless-card .ifacebadge > svg { margin-top:2px; color:var(--aeris-accent); }
+.aeris .aeris-wireless-card .ifacebadge > span { display:grid; gap:8px; min-width:0; }
+.aeris .aeris-wireless-card .ifacebadge .nowrap > strong { flex-basis:56px; }
+/* nftables injects a 0.25em !important cell rule; override it deliberately. */
+.aeris .nft-table { margin:0 0 40px; }
+.aeris .nft-table > h3 { margin:0 0 24px; font-size:20px; line-height:28px; }
+.aeris .nft-chains { display:grid; gap:24px; }
+.aeris .nft-chain { min-width:0; padding:24px; border:1px solid var(--aeris-border); border-radius:16px; background:var(--aeris-background); }
+.aeris .nft-chain > h4 { margin:0 0 16px; font-size:16px; font-weight:700; line-height:24px; scroll-margin-top:100px; }
+.aeris .nft-chain-hook { padding:12px 16px; margin:0 0 24px; background:var(--aeris-subtle); border-radius:12px; color:var(--aeris-muted); font-size:13px; line-height:1.8; }
+.aeris .nft-chain-hook > ul { display:grid; gap:4px; list-style:none; margin:0; padding:0; }
+.aeris .nft-rules { table-layout:fixed; }
+.aeris .nft-rules tr > td { padding:14px 12px!important; vertical-align:top; font-weight:400; }
+.aeris .nft-rules tr > th { padding:12px; background:var(--aeris-subtle); }
+.aeris .nft-rules .ifacebadge { max-width:100%; margin:3px 4px 3px 0; padding:4px 8px; border:0; border-radius:6px; background:var(--aeris-subtle); font-size:12px; line-height:1.8; font-weight:400; white-space:normal; overflow-wrap:anywhere; }
+.aeris .nft-rules .ifacebadge :is(var,em) { font-style:normal; }
+.aeris .nft-rules .ifacebadge strong { font-weight:600; }
+.aeris .nft-rules .nft-counter,.aeris .nft-rules .nft-comment { color:var(--aeris-muted); background:transparent; }
+.aeris .nft-rules .nft-set-items,.aeris .nft-rules .nft-list-items { max-width:100%; }
+@media(max-width:600px) {
+ .aeris .cbi-page-actions .cbi-dropdown.cbi-button-apply { min-width:160px; }
+ .aeris .cbi-page-actions .cbi-button { min-width:72px; padding-inline:14px; }
+ .aeris .nft-chain { padding:16px 12px; }
+ .aeris .nft-rules tr > td { padding:12px 6px!important; }
+ .aeris .nft-chain-hook { padding:12px; }
+ .aeris .aeris-wireless-card .ifacebox-body { padding:16px; }
+ .aeris .aeris-wireless-card .ifacebadge { padding:14px 12px; gap:8px; }
+}
 /* Preserve panel width for upstream chart measurement, but remove ALL height.
    opacity/height alone leaves each card's padding, borders and margins behind. */
 .aeris [data-tab-title]:not([data-tab-active="true"]) {
@@ -23,6 +85,16 @@
 .aeris textarea { font-weight:450; }
 .aeris .cbi-value-field > div:has(> select) { width:min(100%,28rem); }
 .aeris .cbi-value-field > div > select { width:100%; }
+.aeris .cbi-value-field > div:has(> input.cbi-input-text):not(.control-group) { width:min(100%,28rem); }
+.aeris .cbi-value-field > div > input.cbi-input-text { width:100%; }
+.aeris .aeris-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:26px 32px; align-items:start; }
+.aeris .aeris-form-grid > .cbi-value { margin:0; }
+.aeris .aeris-form-grid > .cbi-value:has(textarea,.cbi-dynlist,#localtime) { grid-column:1/-1; }
+.aeris .aeris-form-grid .cbi-value-field > div:has(> :is(input.cbi-input-text,select,.cbi-dropdown)):not(.control-group) { width:100%; }
+.aeris .cbi-value-field:has(#localtime) { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+.aeris .cbi-value-field:has(#localtime) > p { margin:0; }
+.aeris .cbi-value-field:has(#localtime) .control-group { display:flex; flex-wrap:wrap; gap:10px; }
+.aeris .cbi-value-field:has(#localtime) .cbi-button { height:48px; min-height:48px; margin:0; }
 .aeris .cbi-dropdown > .open {
  flex:0 0 42px; width:42px; padding:0; font-size:0;
  background:var(--aeris-select-arrow) center / 18px no-repeat;
@@ -60,6 +132,7 @@
 .aeris-log-filter-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:22px; }
 .aeris-log-filter-heading > label { margin:0!important; font-size:13px; font-weight:600; color:var(--aeris-muted); }
 .aeris-log-filter-heading > .aeris-log-invert { display:flex; align-items:center; gap:8px; font-weight:450; }
+.aeris-log-sort { display:flex; align-items:center; gap:10px; grid-column:1/-1; font-size:13px; color:var(--aeris-muted); }
 .aeris .aeris-log-filter > :is(input,select) { width:100%; margin:0!important; min-width:0; }
 .aeris #content_syslog > .cbi-section-descr:empty { display:none; }
 .aeris-log-actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:0 0 20px!important; }
@@ -69,6 +142,63 @@
 .aeris-native-tab-icon { width:18px; height:18px; flex:0 0 18px; }
 .aeris :is(.tabs,.cbi-tabmenu) > li > a:has(> .aeris-native-tab-icon) { display:flex; align-items:center; gap:8px; }
 .aeris .cbi-button > .aeris-native-action-icon { width:17px; height:17px; flex:0 0 17px; }
+.aeris img.aeris-original-device-icon { display:none!important; }
+.aeris-native-device-icon { display:inline-block; width:20px; height:20px; flex:0 0 20px; color:var(--aeris-muted); vertical-align:-4px; }
+.aeris-native-device-icon.is-inactive { opacity:.4; }
+.aeris .drag-handle > svg { pointer-events:none; stroke-width:3; }
+/* Keep the plugin's controls and theme switch; align its spacing and surfaces. */
+.aeris .oc {
+ --radius-sm:8px; --radius-md:10px; --radius-lg:14px;
+ --control-height:36px; --control-row-height:36px; --icon-btn-size:32px;
+ --card-outer-padding:16px; --card-grid-gap:12px; --section-gap:16px;
+ --card-padding-block:12px; --card-padding:12px 14px;
+ --shadow-sm:none; --shadow-md:0 4px 18px #00000008;
+}
+.aeris .oc .announcement-banner { background:var(--primary-color); box-shadow:none; }
+.aeris .oc .main-card { border-color:var(--border-light); }
+.aeris .oc .sub-card { border-color:var(--border-light); }
+.aeris .oc .mode-row .mode-tab { white-space:nowrap; }
+.aeris .oc .stats-card-header { margin-bottom:12px; }
+.aeris[data-page^="admin-services-openclash"] table.cbi-section-table { display:block; width:100%; max-width:100%; overflow-x:auto; }
+@media(max-width:600px) {
+ .aeris[data-page^="admin-services-openclash"] .cbi-value > :is(.cbi-value-title,.cbi-value-field) { width:100%; max-width:100%; }
+}
+/* The original interface table becomes a responsive set of cards. Existing
+   row IDs, information nodes, tooltips and buttons still belong to LuCI. */
+.aeris .aeris-interface-cards { padding:0; border:0; background:transparent; }
+.aeris .aeris-interface-cards > .table { display:block; overflow:visible; }
+.aeris .aeris-interface-cards > .table > tbody { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.aeris .aeris-interface-cards > .table > tbody > .tr {
+ display:flex; flex-direction:column; align-items:stretch; gap:20px;
+ min-width:0; padding:24px; border:1px solid var(--aeris-border); border-radius:16px;
+ background:var(--aeris-background); transition:border-color .16s;
+}
+.aeris .aeris-interface-cards > .table > tbody > .tr:hover { border-color:var(--aeris-control-hover); }
+.aeris .aeris-interface-cards > .table > tbody > .tr > .td { display:block; flex:0 0 auto; width:100%!important; min-width:0!important; padding:0; border:0; background:transparent!important; text-align:left; }
+.aeris .aeris-interface-cards .ifacebox { display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:16px; width:100%; min-width:0; margin:0; border:0; border-radius:0; overflow:visible; text-align:left; }
+.aeris .aeris-interface-cards .ifacebox-head { padding:0; border:0; background:transparent!important; color:var(--aeris-foreground); font-size:18px; white-space:nowrap; text-shadow:none; }
+.aeris .aeris-interface-cards .ifacebox-head strong { font-weight:700; }
+.aeris .aeris-interface-cards .ifacebox-head strong::before { content:''; display:inline-block; width:9px; height:9px; margin-right:9px; border-radius:50%; background:color-mix(in srgb,rgb(var(--zone-color-rgb,80,120,235)) 70%,var(--aeris-foreground)); vertical-align:1px; }
+.aeris .aeris-interface-cards .ifacebox-body { min-width:0; padding:0; font-size:12px; line-height:1.8; text-align:right; color:var(--aeris-muted); }
+.aeris .aeris-interface-cards .ifacebox-body .aeris-native-device-icon { width:16px; height:16px; }
+.aeris .aeris-interface-cards [id$="-ifc-description"] { display:grid; gap:8px; font-size:13px; }
+.aeris .aeris-interface-cards [id$="-ifc-description"] > br { display:none; }
+.aeris .aeris-interface-cards [id$="-ifc-description"] > .nowrap { display:grid; grid-template-columns:92px minmax(0,1fr); gap:12px; white-space:normal; overflow-wrap:anywhere; }
+.aeris .aeris-interface-cards [id$="-ifc-description"] strong { color:var(--aeris-muted); font-size:12px; font-weight:500; }
+.aeris .aeris-interface-cards .td.cbi-section-actions { margin-top:auto; padding-top:18px!important; border-top:1px solid var(--aeris-border)!important; }
+.aeris .aeris-interface-cards .td.cbi-section-actions > div { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:8px; }
+.aeris .aeris-interface-cards .td.cbi-section-actions .cbi-button { font-size:12px; padding:8px 12px; }
+@media(max-width:1200px) { .aeris .aeris-interface-cards > .table > tbody { grid-template-columns:1fr; } }
+@media(max-width:600px) {
+ .aeris .aeris-interface-cards > .table > tbody > .tr { padding:20px; gap:18px; }
+ .aeris .aeris-interface-cards .ifacebox { align-items:flex-start; flex-direction:column; gap:10px; }
+ .aeris .aeris-interface-cards .ifacebox-body { text-align:left; }
+ .aeris .aeris-interface-cards [id$="-ifc-description"] > .nowrap { grid-template-columns:72px minmax(0,1fr); gap:8px; }
+}
+@media(max-width:900px) {
+ .aeris .aeris-form-grid { grid-template-columns:minmax(0,1fr); gap:24px; }
+ .aeris .cbi-value-field > div:has(> input.cbi-input-text):not(.control-group),.aeris .cbi-value-field > div:has(> select) { width:100%; }
+}
 .aeris .aeris-native-graph { border:1px solid var(--aeris-border)!important; border-radius:12px; overflow:hidden; background:var(--aeris-background)!important; }
 .aeris .aeris-native-graph svg { display:block; }
 .aeris #view .aeris-native-graph svg line[style] { stroke:var(--aeris-border)!important; stroke-width:1!important; stroke-dasharray:3 4; }
@@ -100,3 +230,64 @@
  .aeris .cbi-section-create { margin-top:20px; }
  .aeris .control-group:has(> :is(input,select)) { max-width:100%; }
 }
+/* Ecme controls share the same implementation as the preview catalogue. */
+.aeris select.aeris-native-select-source { display:none!important; }
+.aeris .aeris-select { min-width:0; }
+.aeris .aeris-select-trigger { width:100%; margin:0; }
+.aeris .aeris-select-trigger:focus-visible,.aeris .aeris-select-trigger[aria-expanded="true"] { border-color:var(--aeris-primary); }
+.aeris .cbi-input-invalid + .aeris-select .aeris-select-trigger { border-color:var(--aeris-danger)!important; }
+.aeris .cbi-dropdown[open] > ul.dropdown { padding:6px; border-radius:12px; box-shadow:0 10px 30px #00000014; }
+.aeris .cbi-dropdown[open] > ul.dropdown > li { min-height:42px; padding:10px 12px; border-radius:8px; font-size:14px; line-height:22px; }
+.aeris .cbi-dropdown[open] > ul.dropdown > li[selected] { color:var(--aeris-primary); }
+.aeris .cbi-dropdown:not([multiple])[open] > ul.dropdown > li[selected] { padding-right:38px; position:relative; }
+.aeris .cbi-dropdown:not([multiple])[open] > ul.dropdown > li[selected]::after { content:'✓'; position:absolute; right:12px; top:10px; font-size:16px; }
+.aeris #localtime { margin:0; flex:0 1 300px; width:300px; }
+.aeris .cbi-value-field:has(#localtime) .control-group { margin:0; }
+/* Keep the add glyph when a legacy focus rule changes the joined background. */
+.aeris .cbi-dynlist > .add-item > .cbi-button-add { position:relative; flex:0 0 48px; width:48px; min-width:48px; padding:0; font-size:0!important; background-image:none!important; }
+.aeris .cbi-dynlist > .add-item > .cbi-button-add::after { content:'+'; display:grid; place-items:center; position:absolute; inset:0; font-size:22px; font-weight:500; line-height:1; color:var(--aeris-muted); }
+.aeris .cbi-dynlist > .add-item > .cbi-button-add > svg { display:none; }
+.aeris .alert-message :is(button,input[type="button"]):not([class*="cbi-button-"]) { min-height:40px; padding:8px 20px; border-radius:12px; border:1px solid var(--aeris-border); background:var(--aeris-background); color:var(--aeris-foreground); font-size:14px; font-weight:600; }
+.aeris .alert-message :is(button,input[type="button"]):not([class*="cbi-button-"]):hover { background:var(--aeris-hover); }
+.aeris .aeris-form-grid > .cbi-tab-descr { grid-column:1/-1; margin:0; }
+/* Lease tables need their own full-width rows, including on narrow screens. */
+.aeris [id="cbi-dhcp-__leases__"].cbi-section-node { display:flex; flex-direction:column; gap:32px; }
+.aeris [id="cbi-dhcp-__leases__"].cbi-section-node > .cbi-value { width:100%; min-width:0; margin:0; }
+.aeris [id="cbi-dhcp-__leases__"] .cbi-value-field { min-width:0; max-width:100%; }
+.aeris [id="cbi-dhcp-__leases__"] table { display:block; max-width:100%; width:100%; overflow-x:auto; }
+.aeris [id="cbi-dhcp-__leases__"] table :is(th,td) { white-space:nowrap; }
+.aeris [id="cbi-dhcp-__leases__"] .cbi-section-descr { max-width:100ch; line-height:1.8; }
+.aeris .aeris-sort-actions { min-width:112px; }
+.aeris .cbi-button:is(.cbi-button-up,.cbi-button-down) { width:40px!important; min-width:40px; height:40px; min-height:40px; border-radius:12px; }
+/* Package manager: full-width storage, paired fields, then a separate action row. */
+.aeris[data-page="admin-system-package-manager"] #view > .controls:has(#disk-space-label) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin:24px 0 32px; padding:24px; border:1px solid var(--aeris-border); border-radius:16px; background:var(--aeris-background); }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) > div { display:flex; flex-direction:column; align-items:stretch; gap:10px; min-width:0; padding:0; white-space:normal; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) > div:is(:first-child,:nth-child(4),:nth-child(5)) { grid-column:1/-1; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) > div > * { flex:0 0 auto; align-self:stretch; min-width:0; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) > div > label { color:var(--aeris-muted); font-size:13px; font-weight:600; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) .cbi-progressbar { width:100%; margin:24px 0 0; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) .control-group { margin:0; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#action-label) > div:has(#action-label) .control-group { gap:12px; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#action-label) > div:has(#action-label) .btn { margin:0; min-height:40px; }
+.aeris[data-page="admin-system-package-manager"] .controls:has(#disk-space-label) > div:last-child > div { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; }
+.aeris[data-page="admin-system-package-manager"] .controls label:has(input[type="radio"]) { display:inline-flex; align-items:center; gap:8px; margin:0; }
+.aeris[data-page="admin-system-package-manager"] #view > .controls:has(.pager) { display:block; margin:20px 0; }
+.aeris[data-page="admin-system-package-manager"] .controls > .pager { display:flex; align-items:center; justify-content:flex-end; gap:16px; padding:0; flex-wrap:nowrap; min-width:0; }
+.aeris[data-page="admin-system-package-manager"] .controls > .pager > * { flex:0 0 auto; }
+.aeris[data-page="admin-system-package-manager"] .controls > .pager > .btn { flex:0 0 40px; width:40px; min-height:40px; padding:8px; border-radius:12px; }
+.aeris[data-page="admin-system-package-manager"] .pager > .text { color:var(--aeris-muted); font-size:13px; }
+.aeris[data-page="admin-system-package-manager"] #packages { border:1px solid var(--aeris-border); border-radius:16px; background:var(--aeris-background); overflow:hidden; }
+@media(max-width:700px) {
+ .aeris[data-page="admin-system-package-manager"] #view > .controls:has(#disk-space-label) { grid-template-columns:minmax(0,1fr); padding:20px; }
+ .aeris[data-page="admin-system-package-manager"] #packages { display:block; max-width:100%; overflow-x:auto; }
+}
+.aeris .control-group > select.aeris-native-select-source + .aeris-select { flex:1; min-width:0; }
+.aeris .control-group > .aeris-select:has(~ :is(button,.cbi-button)) .aeris-select-trigger { border-radius:12px 0 0 12px; }
+.aeris .cbi-section-create > .aeris-select { width:auto; flex:1 1 200px; max-width:28rem; }
+.aeris[data-page^="admin-services-openclash"] table:has(.aeris-sort-actions) .tr > :nth-child(4) { min-width:200px; }
+.aeris[data-page^="admin-services-openclash"] table:has(.aeris-sort-actions) .tr > :nth-child(5) { min-width:100px; }
+/* Status overview uses clickable labels for Hide/Show; the handler replaces
+   their class on each toggle, so style the stable semantic attributes. */
+.aeris .cbi-title h3:has([data-clickable="true"]) { align-items:center; gap:16px; }
+.aeris .cbi-title [data-clickable="true"] { flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:8px 20px; border:1px solid var(--aeris-border); border-radius:12px; background:var(--aeris-background); color:var(--aeris-foreground); font-size:14px; line-height:22px; font-weight:600; box-shadow:none; cursor:pointer; }
+.aeris .cbi-title [data-clickable="true"]:hover { background:var(--aeris-hover); }

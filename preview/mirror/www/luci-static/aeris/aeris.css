@@ -1,0 +1,316 @@
+/* Aeris component system, v2. Ecme reference: filled controls, generous spacing,
+   strong button hierarchy. LuCI behaviors remain provided by compat.css. */
+:root {
+ --aeris-background:#fff; --aeris-foreground:#262626; --aeris-muted:#6b6b6b;
+ --aeris-subtle:#f5f5f5; --aeris-hover:#f0f0f0; --aeris-border:#e5e5e5;
+ --aeris-tab-text:#525252; --aeris-warning:#854d0e; --aeris-warning-soft:#fef3c7; --aeris-warning-border:#f3cf6b;
+ --aeris-primary:#2563eb; --aeris-on-primary:#fff; --aeris-accent:#2563eb;
+ --aeris-ring:#6b9cfa; --aeris-danger:#b62b36; --aeris-radius:16px;
+ --aeris-card-title-size:20px; --aeris-card-title-line:28px; --aeris-card-title-weight:700;
+ --aeris-sidebar-width:252px; --aeris-blue-soft:#edf3ff;
+ --aeris-green:#176145; --aeris-green-soft:#baf0d6;
+ --aeris-purple:#7650b4; --aeris-purple-soft:#ede0fd;
+ --aeris-cyan:#246781; --aeris-cyan-soft:#d7effa;
+ --aeris-page:#f4f5f7; --aeris-control:#f8f9fb; --aeris-control-border:#c4cbd4;
+ --aeris-control-hover:#9da9ba; --aeris-table-hover:#edf3ff;
+ --font-sans:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+ --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+ color-scheme:light;
+}
+:root[data-darkmode="true"] {
+ --aeris-background:#202226; --aeris-foreground:#f3f4f5; --aeris-muted:#a8abb3;
+ --aeris-subtle:#16181c; --aeris-hover:#30333a; --aeris-border:#383b43;
+ --aeris-tab-text:#b5b7bf; --aeris-warning:#f5d486; --aeris-warning-soft:#40331b; --aeris-warning-border:#816630;
+ --aeris-primary:#3e6bdc; --aeris-accent:#a5c3ff; --aeris-on-primary:#fff;
+ --aeris-page:#16181c; --aeris-control:#2d3036; --aeris-control-border:#59616e;
+ --aeris-control-hover:#8491a6; --aeris-table-hover:#2b3850;
+ --aeris-ring:#8bafff; --aeris-danger:#ffabb5; --aeris-blue-soft:#2b3a53;
+ --aeris-green:#a0e9c5; --aeris-green-soft:#22493a;
+ --aeris-purple:#d0b3fa; --aeris-purple-soft:#403151;
+ --aeris-cyan:#a0dcf2; --aeris-cyan-soft:#254553;
+ color-scheme:dark;
+}
+:root,:root[data-darkmode="true"] {
+ --background-color-high:var(--aeris-background); --background-color-medium:var(--aeris-subtle); --background-color-low:var(--aeris-hover);
+ --text-color-highest:var(--aeris-foreground); --text-color-high:var(--aeris-foreground); --text-color-medium:var(--aeris-muted); --text-color-low:var(--aeris-muted);
+ --border-color-high:var(--aeris-border); --border-color-medium:var(--aeris-border); --border-color-low:var(--aeris-border);
+ --primary-color-high:var(--aeris-primary); --primary-color-medium:var(--aeris-primary); --primary-color-low:var(--aeris-primary); --on-primary-color:var(--aeris-on-primary);
+}
+* { box-sizing:border-box; scrollbar-width:thin; scrollbar-color:var(--aeris-border) transparent; }
+[hidden] { display:none!important; }
+html { min-height:100%; background:var(--aeris-page); }
+body.aeris { margin:0; padding:0; display:block; min-height:100vh; min-height:100dvh; background:var(--aeris-page); color:var(--aeris-foreground); font:14px/1.6 var(--font-sans); -webkit-font-smoothing:antialiased; }
+::selection { background:var(--aeris-primary); color:#fff; }
+a { color:inherit; text-underline-offset:4px; }
+a:hover { color:var(--aeris-accent); }
+.aeris :is(a,button,input,textarea,select,summary,[tabindex]):focus-visible { outline:2px solid var(--aeris-ring); outline-offset:3px; }
+.aeris :is(input,textarea) { caret-color:var(--aeris-accent); }
+.aeris-muted { color:var(--aeris-muted); }
+.aeris-skip { position:fixed; top:-100px; left:16px; z-index:1200; background:var(--aeris-primary); color:#fff; padding:12px 20px; border-radius:12px; }
+.aeris-skip:focus { top:12px; }
+/* Navigation shell */
+.aeris-sidebar { position:fixed; inset:0 auto 0 0; width:var(--aeris-sidebar-width); z-index:60; display:flex; flex-direction:column; background:var(--aeris-background); border-right:1px solid var(--aeris-border); transition:transform .2s ease; }
+.aeris-brand { display:flex; align-items:center; gap:12px; min-height:88px; padding:22px 24px; }
+.aeris-brand:hover { text-decoration:none; color:var(--aeris-foreground); }
+.aeris-brand strong { display:block; font-size:27px; line-height:1.15; font-weight:750; letter-spacing:-.8px; }
+.aeris-brand small { display:block; font-size:10px; margin-top:6px; color:var(--aeris-muted); letter-spacing:1.3px; }
+.aeris-mark { display:inline-block; width:40px; height:40px; flex:0 0 40px; background:url('mark.svg') center/contain no-repeat; }
+.aeris-nav-search { padding:10px 18px 25px; }
+.aeris .aeris-nav-search input[type="search"] { width:100%; height:42px; min-height:42px; font-size:12px; }
+.aeris-nav-caption { padding:0 28px 12px; color:var(--aeris-muted); font-size:11px; font-weight:600; letter-spacing:1px; }
+#aeris-navigation { flex:1; overflow-y:auto; padding:0 14px 24px; }
+.aeris-menu-loading,.aeris-menu-empty { color:var(--aeris-muted); padding:12px; font-size:13px; }
+.aeris-nav-group { margin-bottom:8px; }
+.aeris-nav-item { display:flex; align-items:center; gap:12px; padding:12px 14px; min-height:48px; border-radius:10px; cursor:pointer; list-style:none; font-size:14px; font-weight:550; }
+.aeris-nav-item::-webkit-details-marker { display:none; }
+.aeris-nav-item:hover { background:var(--aeris-subtle); color:inherit; text-decoration:none; }
+.aeris-nav-group[open] > summary { background:var(--aeris-blue-soft); color:var(--aeris-accent); }
+.aeris-nav-item svg,.aeris-icon-button svg { width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+.aeris-chevron { margin-left:auto; width:6px; height:6px; border-right:1.5px solid; border-bottom:1.5px solid; transform:rotate(-45deg); transition:transform .18s; }
+details[open] > summary .aeris-chevron { transform:rotate(45deg); }
+.aeris-nav-children { margin:3px 0 9px; padding:0; list-style:none; border:0; }
+.aeris-nav-children li { margin:0; padding:0; }
+.aeris-nav-children a { display:block; position:relative; padding:11px 14px 11px 46px; font-size:13px; font-weight:500; color:var(--aeris-muted); border-radius:9px; text-decoration:none; overflow-wrap:anywhere; }
+.aeris-nav-children a::before { content:''; position:absolute; left:23px; top:21px; width:4px; height:4px; background:var(--aeris-border); border-radius:50%; }
+.aeris-nav-children a:hover { background:var(--aeris-subtle); color:var(--aeris-foreground); }
+.aeris-nav-children a[aria-current="page"] { color:var(--aeris-accent); font-weight:650; }
+.aeris-nav-children a[aria-current="page"]::before { background:currentColor; }
+.aeris-sidebar-foot { margin:0 22px; padding:20px 2px; border-top:1px solid var(--aeris-border); }
+.aeris-device-label { display:block; font-size:11px; color:var(--aeris-muted); overflow-wrap:anywhere; }
+#modemenu { display:flex; gap:12px; margin-top:10px; }
+.aeris-workspace { min-height:100vh; min-height:100dvh; min-width:0; margin-left:var(--aeris-sidebar-width); display:flex; flex-direction:column; transition:margin-left .2s ease; }
+header.aeris-topbar { position:sticky; top:0; z-index:40; height:72px; min-height:72px; display:flex; align-items:center; gap:18px; margin:0; padding:0 30px; width:auto; max-width:none; color:var(--aeris-foreground); background:var(--aeris-background); border:0; border-bottom:1px solid var(--aeris-border); border-radius:0; box-shadow:none; }
+.aeris-icon-button { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; padding:8px; border:0; border-radius:50%; color:var(--aeris-foreground); background:transparent; cursor:pointer; box-shadow:none; }
+.aeris-icon-button:hover { background:var(--aeris-subtle); box-shadow:none; }
+.aeris-topbar-divider { width:1px; height:20px; background:var(--aeris-border); }
+.aeris-breadcrumb { display:flex; align-items:center; gap:12px; min-width:0; font-size:13px; white-space:nowrap; overflow:hidden; }
+.aeris-breadcrumb a { color:var(--aeris-muted); text-shadow:none; }
+.aeris-breadcrumb a + a::before { content:'/'; color:var(--aeris-border); margin-right:12px; }
+.aeris-breadcrumb a:last-child { color:var(--aeris-foreground); overflow:hidden; text-overflow:ellipsis; }
+.aeris-topbar-actions { display:flex; align-items:center; gap:14px; margin-left:auto; }
+.aeris-topbar-tag { font-size:12px; color:var(--aeris-muted); }
+.aeris-user { display:flex; align-items:center; gap:10px; font-size:12px; padding-left:14px; border-left:1px solid var(--aeris-border); }
+.aeris-avatar { display:grid; place-items:center; width:36px; height:36px; background:var(--aeris-purple-soft); color:var(--aeris-purple); border-radius:50%; font-weight:650; }
+#indicators { display:flex; gap:8px; align-items:center; font-size:12px; }
+.aeris-topbar #indicators > [data-indicator] { border-radius:10px; padding:7px 10px; box-shadow:none; }
+#maincontent.container { flex:1; width:100%; max-width:1600px; min-width:0; margin:0 auto; padding:30px 32px 40px; }
+#maincontent:focus { outline:0; }
+footer.aeris-footer { display:flex; justify-content:space-between; gap:16px; margin:0 32px; padding:20px 0; width:auto; max-width:none; border-top:1px solid var(--aeris-border); background:transparent; color:var(--aeris-muted); font-size:11px; }
+.aeris-footer span,.aeris-footer a { font-size:inherit; }
+.aeris-footer > span:first-child > span { margin:0 6px; }
+.aeris-sidebar-collapsed .aeris-sidebar { transform:translateX(-100%); }
+.aeris-sidebar-collapsed .aeris-workspace { margin-left:0; }
+.aeris-backdrop { position:fixed; inset:0; width:100%; height:100%; z-index:55; background:#11182766; border:0; }
+/* Type and sections */
+.aeris :is(h1,h2,h3,h4,h5,h6,legend) { font-family:var(--font-sans); color:var(--aeris-foreground); }
+.aeris :is(h1,h2) { margin:0 0 8px; font-size:28px; line-height:1.35; font-weight:750; letter-spacing:-.65px; }
+.aeris :is(h3,legend) { font-size:20px; line-height:1.5; font-weight:700; letter-spacing:-.3px; }
+.aeris h4 { font-size:16px; font-weight:650; }
+.aeris p,.cbi-map-descr,.cbi-section-descr { font-size:14px; line-height:1.65; }
+.cbi-map { margin:0 0 24px; }
+.cbi-map-descr { color:var(--aeris-muted); margin-bottom:26px; max-width:80ch; }
+.cbi-section,.cbi-tblsection { margin:0 0 24px; padding:28px; min-width:0; border:1px solid var(--aeris-border); border-radius:16px; background:var(--aeris-background); box-shadow:none; }
+.cbi-section > h3,.cbi-section > legend,.cbi-tblsection > h3 { margin:0 0 20px; padding:0; }
+.cbi-section-descr { color:var(--aeris-muted); margin:-8px 0 24px; }
+.cbi-section-node { padding:0; }
+.cbi-section .cbi-section { margin-top:20px; padding:22px; }
+/* Forms: Ecme filled controls, labels above fields, no table-like row dividers. */
+.aeris .cbi-value { display:flex; flex-direction:column; align-items:stretch; gap:9px; margin:0 0 24px; padding:0; border:0; }
+.aeris .cbi-value:last-child { margin-bottom:0; }
+.aeris .cbi-value-title,.aeris .cbi-value label.cbi-value-title { display:block; flex:0 0 auto; width:auto; padding:0; margin:0; text-align:left; line-height:1.5; font-size:14px; font-weight:600; color:var(--aeris-muted); }
+.aeris .cbi-value-field { margin:0; min-width:0; }
+.aeris .cbi-value-description { margin:8px 0 0; padding:0; font-size:12px; line-height:1.6; color:var(--aeris-muted); }
+.aeris .cbi-value-description::before { display:none; }
+.aeris :is(label,input,select,textarea,button) { font-family:var(--font-sans); box-sizing:border-box; }
+.aeris input:not([type="checkbox"],[type="radio"],[type="range"],[type="button"],[type="submit"],[type="reset"]),.aeris select,.aeris textarea,.aeris .cbi-select,.aeris .cbi-dropdown:not(.btn):not(.cbi-button) {
+ min-height:48px; height:48px; padding:11px 14px; max-width:100%; border:1px solid var(--aeris-control-border); border-radius:12px; background:var(--aeris-control); color:var(--aeris-foreground); font-size:14px; font-weight:600; line-height:24px; box-shadow:none; transition:background-color .15s,border-color .15s,box-shadow .15s;
+}
+.aeris .cbi-value-field > input:not([type="checkbox"]):not([type="radio"]):not([type="button"]),.aeris .cbi-value-field > select,.aeris .cbi-value-field > textarea { width:100%; }
+.aeris textarea { height:auto; min-height:112px; resize:vertical; line-height:1.7; }
+.aeris input::placeholder,.aeris textarea::placeholder { color:var(--aeris-muted); font-weight:450; opacity:.85; }
+.aeris :is(input:not([type="checkbox"],[type="radio"]),textarea,select,.cbi-dropdown):focus,.aeris .cbi-dropdown[open] { background:var(--aeris-background); border-color:var(--aeris-primary)!important; box-shadow:0 0 0 1px var(--aeris-primary); outline:none; }
+.aeris input[readonly] { color:var(--aeris-muted); }
+.aeris :is(input,select,textarea,button,.cbi-dropdown)[disabled] { opacity:.45; cursor:not-allowed; }
+.aeris :is(input,select,textarea,.cbi-dropdown).cbi-input-invalid,.aeris [aria-invalid="true"] { border-color:var(--aeris-danger)!important; }
+.aeris .cbi-value-error :is(.cbi-value-title,.cbi-value-description),.aeris .cbi-value:has([aria-invalid="true"]) .cbi-value-description { color:var(--aeris-danger); }
+/* Native checkbox and radio stay keyboard-operable. Flag rows use switch shapes. */
+.aeris input[type="checkbox"],.aeris input[type="radio"] { appearance:none; position:relative; display:inline-block; width:20px; height:20px; min-width:20px; padding:0; margin:0; border:0; background:none; vertical-align:middle; box-shadow:none; cursor:pointer; flex-shrink:0; }
+.aeris :is(input[type="checkbox"],input[type="radio"])::before { content:''; position:absolute; inset:0; width:100%; height:100%; border:2px solid #c9cdd3; border-radius:5px; background:var(--aeris-background); box-shadow:none; }
+.aeris :is(input[type="checkbox"],input[type="radio"])::after { content:''; position:absolute; top:5px; left:5px; width:10px; height:10px; background:#fff; opacity:0; mask:none; -webkit-mask:none; }
+.aeris input[type="checkbox"]::after { clip-path:polygon(0 45%,35% 80%,100% 15%,100% 42%,35% 100%,0 66%); }
+.aeris :is(input[type="checkbox"],input[type="radio"]):checked::before { background:var(--aeris-primary); border-color:var(--aeris-primary); }
+.aeris :is(input[type="checkbox"],input[type="radio"]):checked::after { opacity:1; }
+.aeris input[type="radio"]::before,.aeris input[type="radio"]::after { border-radius:50%; }
+.aeris input[type="radio"]::after { width:8px; height:8px; top:6px; left:6px; clip-path:none; }
+/* Pointer focus keeps the normal control edge; keyboard focus uses :focus-visible. */
+.aeris :is(input[type="checkbox"],input[type="radio"]):focus { box-shadow:none; }
+.aeris :is(input[type="checkbox"],input[type="radio"]):focus::before { border-color:#c9cdd3!important; box-shadow:none; }
+.aeris :is(input[type="checkbox"],input[type="radio"]):checked:focus::before { border-color:var(--aeris-primary)!important; }
+.aeris .cbi-checkbox { display:flex; align-items:center; gap:10px; min-height:32px; }
+.aeris input.aeris-switch,.aeris .cbi-checkbox input[type="checkbox"] { width:44px; height:24px; min-width:44px; }
+.aeris input.aeris-switch::before,.aeris .cbi-checkbox input[type="checkbox"]::before { border:0; border-radius:24px; background:#d4d4d8; transition:background .2s; }
+.aeris input.aeris-switch::after,.aeris .cbi-checkbox input[type="checkbox"]::after { width:20px; height:20px; top:2px; left:2px; border-radius:50%; background:#fff; clip-path:none; opacity:1; transform:none; box-shadow:0 1px 3px #0001; transition:transform .2s; }
+.aeris input.aeris-switch:checked::before,.aeris .cbi-checkbox input[type="checkbox"]:checked::before { background:var(--aeris-primary); }
+.aeris input.aeris-switch:checked::after,.aeris .cbi-checkbox input[type="checkbox"]:checked::after { transform:translateX(20px); }
+/* Buttons: solid / outlined / plain. */
+.aeris :is(.btn,.cbi-button,button.cbi-button,input.cbi-button) { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; height:40px; padding:8px 12px; border:1px solid #d4d4d4; border-radius:12px; background:var(--aeris-background); color:var(--aeris-foreground); font-size:14px; line-height:22px; font-weight:700; text-shadow:none; box-shadow:none; white-space:nowrap; cursor:pointer; transition:background .15s,transform .12s; }
+.aeris :is(.btn,.cbi-button):hover { background:var(--aeris-subtle); color:var(--aeris-foreground); border-color:var(--aeris-border)!important; box-shadow:none; text-decoration:none; }
+.aeris :is(.btn,.cbi-button):active:not(:disabled) { transform:scale(.98); }
+.aeris :is(.btn.primary,.cbi-button-apply,.cbi-button-positive,.cbi-button-add,.cbi-button-action) { background:var(--aeris-primary); color:#fff; border-color:transparent; }
+.aeris :is(.btn.primary,.cbi-button-apply,.cbi-button-positive,.cbi-button-add,.cbi-button-action):hover { background:var(--aeris-primary); color:#fff; border-color:transparent!important; filter:brightness(.94); }
+.aeris :is(.btn.plain,.cbi-button-reset) { background:transparent; border-color:transparent; box-shadow:none; }
+.aeris :is(.btn.plain,.cbi-button-reset):hover { background:var(--aeris-subtle); border-color:transparent!important; }
+.aeris :is(.btn.danger,.cbi-button-remove,.cbi-button-negative) { color:var(--aeris-danger); background:transparent; border-color:transparent; }
+.aeris :is(.btn.danger,.cbi-button-remove,.cbi-button-negative):hover { color:var(--aeris-danger); background:color-mix(in srgb,var(--aeris-danger) 8%,transparent); border-color:transparent!important; }
+.aeris .btn.small,.aeris .cbi-section-actions .cbi-button { min-height:40px; height:40px; padding:8px 12px; font-size:14px; border-radius:12px; }
+.aeris .btn.medium { min-height:48px; height:48px; padding:8px 20px; }
+.aeris .cbi-page-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:10px; padding:22px 0 0; margin:24px 0 0; background:none; border-top:1px solid var(--aeris-border); border-radius:0; }
+.aeris .cbi-page-actions > * { margin:0; }
+/* Native and segmented tabs */
+.aeris .tabs,.aeris .cbi-tabmenu { display:flex; flex-wrap:nowrap; gap:0; padding:0; margin:0 0 24px; border-bottom:1px solid var(--aeris-border); list-style:none; background:none; }
+.aeris :is(.tabs,.cbi-tabmenu) > li { float:none; height:auto; margin:0 0 -1px; padding:0; border:0; border-bottom:2px solid transparent; border-radius:0; background:none; box-shadow:none; }
+.aeris :is(.tabs,.cbi-tabmenu) > li > a { display:block; padding:12px 20px; border:0; background:none; color:var(--aeris-tab-text); font-size:14px; font-weight:700; line-height:21px; }
+.aeris :is(.tabs > li.active,.cbi-tabmenu > li.cbi-tab) { border-bottom-color:var(--aeris-primary); }
+.aeris :is(.tabs > li.active,.cbi-tabmenu > li.cbi-tab) > a { color:var(--aeris-accent); }
+.aeris :is(.tabs,.cbi-tabmenu) > li > a:hover { color:var(--aeris-accent); text-decoration:none; }
+
+/* Tables and status chips */
+.aeris .table { width:100%; margin:0; border-collapse:collapse; border-spacing:0; font-size:14px; font-variant-numeric:tabular-nums; }
+.aeris .table :is(.th,.td) { border:0; border-bottom:1px solid var(--aeris-border); padding:18px 16px; line-height:1.65; vertical-align:middle; background:none; }
+.aeris .table .th { color:var(--aeris-muted); font-size:12px; font-weight:650; letter-spacing:.3px; }
+.aeris .table .tr:first-child .th { padding-top:12px; font-weight:650; border-top:0; }
+.aeris .table .tr:last-child .td { border-bottom:0; }
+.aeris .table .tr:nth-child(2n),.aeris .table .tr:nth-child(2n) .td { background:none; }
+.aeris .table .tr:hover .td { background:var(--aeris-table-hover); }
+.aeris .table .td:first-child { font-weight:550; }
+.aeris .table .td .cbi-button { margin:2px; }
+.aeris .table small { color:var(--aeris-muted); font-size:12px; }
+.aeris .ifacebox { border:1px solid var(--aeris-border); border-radius:14px; background:var(--aeris-background); overflow:hidden; box-shadow:none; }
+.aeris .ifacebox-head { padding:14px 18px; background:var(--aeris-subtle); color:var(--aeris-foreground); }
+.aeris .ifacebox-body { padding:18px; line-height:1.9; }
+.aeris .cbi-progressbar { height:8px; margin:28px 0 4px; border:0; border-radius:8px; background:var(--aeris-subtle); overflow:visible; }
+.aeris .cbi-progressbar > div { background:var(--aeris-primary); border-radius:8px; }
+.aeris .cbi-progressbar::before { display:block; content:attr(title); position:absolute; top:-25px; left:0; max-width:100%; color:var(--aeris-muted); font-size:12px; line-height:20px; }
+.aeris .cbi-progressbar::after { display:none; }
+.aeris-tag { display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:6px; font-size:12px; font-weight:650; line-height:22px; background:var(--aeris-blue-soft); color:var(--aeris-accent); white-space:nowrap; }
+.aeris-tag.success { background:var(--aeris-green-soft); color:var(--aeris-green); }
+.aeris-tag.error { background:#fbd1d7; color:#8b1c2c; }
+.aeris-tag.neutral { background:var(--aeris-subtle); color:var(--aeris-muted); }
+/* Alerts and overlays */
+.aeris .alert-message { position:relative; margin:0 0 20px; padding:16px 20px; border:0; border-radius:12px; box-shadow:none; background:var(--aeris-blue-soft); color:#255295; }
+.aeris .alert-message h4 { margin:0 0 4px; font-size:15px; color:inherit; }
+.aeris .alert-message p { margin:0; font-size:13px; }
+.aeris .alert-message.warning { background:#fff5cf; color:#8b651d; }
+.aeris .alert-message.error,.aeris .alert-message.danger { background:#fde6e8; color:#a32b3a; }
+.aeris .alert-message.success { background:#dff7eb; color:#226948; }
+:root[data-darkmode="true"] .aeris .alert-message { background:#263a53; color:#b1ccff; }
+:root[data-darkmode="true"] .aeris .alert-message.warning { background:#433c24; color:#edd58e; }
+:root[data-darkmode="true"] .aeris .alert-message.error { background:#482d35; color:#ffb5c0; }
+:root[data-darkmode="true"] .aeris .alert-message.success { background:#244338; color:#a0e9c5; }
+/* Native dialogs center in the viewport; drawers keep their edge placement. */
+.aeris dialog:not(.au-drawer) { position:fixed; inset:0; margin:auto; max-height:calc(100dvh - 32px); }
+.aeris #modal_overlay { display:flex; flex-direction:column; padding:16px; background:#1a1b2066; backdrop-filter:blur(5px); }
+.aeris #modal_overlay > .modal { flex-shrink:0; margin:auto; max-width:min(720px,100%); }
+.aeris .modal,.aeris-demo-dialog { width:min(520px,calc(100vw - 32px)); min-width:0; max-width:720px; margin:64px auto; padding:26px; border:0; border-radius:24px; color:var(--aeris-foreground); background:var(--aeris-background); box-shadow:0 18px 70px #0002; }
+.aeris .modal h4,.aeris-demo-dialog h3 { margin:0 40px 12px 0; font-size:20px; font-weight:750; }
+.aeris .modal > .button-row,.aeris-dialog-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:26px; }
+.aeris .modal .cbi-section { border:0; padding:0; }
+.aeris-demo-dialog::backdrop { background:#1a1b2070; backdrop-filter:blur(5px); }
+.aeris-demo-dialog p { color:var(--aeris-muted); margin:0 0 24px; }
+.aeris-dialog-close { position:absolute; top:20px; right:20px; background:var(--aeris-subtle); width:32px; height:32px; }
+/* LuCI dropdown, dynamic lists, joined inputs */
+.aeris .cbi-dropdown[open] > ul.dropdown { margin:8px 0!important; padding:8px; border:1px solid var(--aeris-border); border-radius:14px; background:var(--aeris-background); color:var(--aeris-foreground); box-shadow:0 14px 36px #0002; }
+.aeris .cbi-dropdown[open] > ul.dropdown > li { min-height:42px; padding:10px 12px; border:0; border-radius:8px; color:var(--aeris-foreground); background:none; font-size:14px; line-height:22px; }
+.aeris .cbi-dropdown[open] > ul.dropdown > li:is([selected],.focus,:hover) { background:var(--aeris-subtle); color:var(--aeris-accent); }
+.aeris .cbi-dropdown > ul.preview { border:0; background:none; box-shadow:none; }
+.aeris .cbi-dropdown.cbi-button > ul:not(.dropdown) > li { color:inherit; }
+.aeris .cbi-dropdown:not(.btn):not(.cbi-button) { width:100%; min-height:48px; height:auto; }
+.aeris .cbi-dropdown:not(.btn):not(.cbi-button) > ul:not(.dropdown) > li { padding:11px 14px; }
+.aeris .cbi-dropdown > .open { padding:0 12px; }
+.aeris .cbi-dropdown > .open .ae-icon { width:16px; height:16px; }
+.aeris .cbi-dropdown[open] > ul.dropdown { left:0; }
+.aeris .cbi-dropdown[open] > ul.dropdown > li[selected]:is(.focus,:hover) { background:var(--aeris-subtle); color:var(--aeris-accent); }
+.aeris .control-group { display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; max-width:100%; }
+.aeris .control-group:has(> :is(input,select)) { display:flex; width:100%; flex-wrap:nowrap; gap:0; }
+.aeris .control-group > :is(input,select) { flex:1; min-width:0; width:100%; margin:0; }
+.aeris .control-group > :is(input,select):has(~ :is(button,.cbi-button)) { border-radius:12px 0 0 12px; }
+.aeris .control-group > :is(input,select) ~ :is(button,.cbi-button) { min-height:48px; flex:0 0 auto; margin:0; padding:10px 14px; border:1px solid var(--aeris-control-border); border-left:0; border-radius:0 12px 12px 0; background:var(--aeris-control); color:var(--aeris-muted); }
+#localtime + br + .control-group { margin-top:12px; }
+.aeris .cbi-dynlist { display:flex; flex-direction:column; gap:8px; max-width:100%; min-width:0; }
+.aeris .cbi-dynlist > .item { position:relative; min-height:44px; margin:0; padding:9px 46px 9px 14px; border:0; border-radius:10px; background:var(--aeris-control); color:var(--aeris-foreground); box-shadow:none; }
+.aeris .cbi-dynlist > .item::after { width:40px; border:0; border-radius:0 10px 10px 0; padding:0; background:none; color:var(--aeris-muted); }
+.aeris .cbi-dynlist > .item:hover::after { background:var(--aeris-hover); box-shadow:none; }
+.aeris .cbi-dynlist > .add-item { width:100%; }
+/* An action beside a field shares the field's height, including wrapped rows. */
+.aeris :is(.rd-list-add,.ap-inline:has(> .au-input-wrap),.ap-diagnostic-toolbar,.ap-terminal-input,.cbi-dynlist > .add-item,.cbi-section-create:has(> input),.control-group:has(> :is(input,select,.cbi-dropdown))) > :is(button,.btn,.cbi-button) {
+ align-self:stretch; height:auto; min-height:48px; margin-block:0;
+}
+.aeris :is(pre,code) { font-family:var(--font-mono); font-size:12px; color:var(--aeris-foreground); background:var(--aeris-subtle); border-color:var(--aeris-border); border-radius:10px; }
+.aeris pre { padding:20px; line-height:1.8; overflow:auto; }
+/* Simple sign-in: open white surface, left-aligned brand, filled fields. */
+body.aeris-auth { display:grid; place-items:center; background:var(--aeris-background); }
+.aeris-login { width:min(410px,calc(100% - 48px)); padding:54px 0; }
+.aeris-login-brand { display:flex; align-items:center; gap:12px; font-size:27px; font-weight:750; letter-spacing:-.8px; margin-bottom:36px; }
+.aeris-login-brand .aeris-mark { width:48px; height:48px; flex-basis:48px; }
+.aeris-login-card { padding:0; border:0; background:transparent; }
+.aeris-login-card h1 { font-size:32px; letter-spacing:-.8px; margin:0 0 8px; }
+.aeris-login-card > p { margin:0 0 38px; color:var(--aeris-muted); font-size:14px; }
+.aeris-login-card label { display:block; font-size:14px; font-weight:600; color:var(--aeris-muted); margin:0 0 9px; }
+.aeris-login-card input { display:block; width:100%; margin:0 0 25px; }
+.aeris-login-card .control-group { margin-bottom:28px; }
+.aeris-login-card .control-group input { margin:0; }
+.aeris-login-card button[type="submit"] { width:100%; margin-top:6px; }
+.aeris-login-footer { margin:30px 0 0; padding-top:24px; border-top:1px solid var(--aeris-border); color:var(--aeris-muted); font-size:12px; text-align:center; }
+@media(max-width:1150px) { :root { --aeris-sidebar-width:230px; } #maincontent.container { padding:26px 24px 36px; } .cbi-section,.cbi-tblsection { padding:24px; } }
+@media(max-width:800px) {
+ .aeris-sidebar { width:280px; max-width:calc(100vw - 48px); transform:translateX(-100%); }
+ .aeris-workspace,.aeris-sidebar-collapsed .aeris-workspace { margin-left:0; }
+ .aeris-sidebar-open .aeris-sidebar { transform:translateX(0); }
+ body.aeris-sidebar-open { overflow:hidden; }
+ header.aeris-topbar { height:64px; min-height:64px; padding:0 14px; gap:10px; }
+ .aeris-breadcrumb a:not(:last-child),.aeris-topbar-tag,.aeris-user > span:last-child { display:none; }
+ .aeris-breadcrumb a:last-child::before { display:none; }
+ .aeris-topbar-actions { gap:6px; }
+ .aeris-user { padding-left:10px; }
+ #maincontent.container { padding:24px 16px 32px; }
+ .aeris :is(h1,h2) { font-size:25px; }
+ .aeris h3 { font-size:18px; }
+ .cbi-section,.cbi-tblsection { padding:20px; }
+ .aeris :is(input[type="text"],input[type="search"],input[type="password"],select,textarea) { font-size:16px; }
+ .aeris .cbi-page-actions { justify-content:flex-end; gap:8px; }
+ .aeris .cbi-page-actions .cbi-button { padding:10px 16px; }
+ .aeris .table { display:block; overflow-x:auto; max-width:100%; }
+ .aeris .table :is(.td,.th) { min-width:110px; padding:16px 12px; }
+ .aeris footer.aeris-footer { margin:0 16px; flex-wrap:wrap; }
+ .aeris .modal,.aeris-demo-dialog { margin:24px auto; padding:24px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+/* Preserve filled controls while a native LuCI dropdown is focused. */
+.aeris .cbi-dropdown:not(.btn):not(.cbi-button):is([open],:focus) { background:var(--aeris-background); }
+:root[data-darkmode="true"] .aeris :is(.btn,.cbi-button) { border-color:#52555c; }
+:root[data-darkmode="true"] .aeris :is(.btn.primary,.cbi-button-apply,.cbi-button-positive,.cbi-button-add,.cbi-button-action,.btn.plain,.btn.danger,.cbi-button-reset,.cbi-button-remove,.cbi-button-negative) { border-color:transparent; }
+:root[data-darkmode="true"] .aeris-tag.error { background:#482d35; color:#ffb5c0; }
+:root[data-darkmode="true"] .aeris input.aeris-switch:not(:checked)::before,:root[data-darkmode="true"] .aeris .cbi-checkbox input[type="checkbox"]:not(:checked)::before { background:#555861; }
+.aeris .control-group:has(> input:focus) { border-radius:12px; background:var(--aeris-background); box-shadow:0 0 0 2px var(--aeris-primary); }
+.aeris .control-group > input:focus { box-shadow:none; outline:none; border-color:transparent!important; }
+.aeris .control-group:has(> input:focus) > :is(button,.cbi-button) { background:var(--aeris-background); border-color:transparent; }
+
+.aeris .ifacebox .ifacebox-head.active { background:var(--aeris-blue-soft); color:var(--aeris-accent); }
+
+/* Remove Bootstrap's universal blue hover glow; focus remains keyboard-visible. */
+.aeris button:hover { box-shadow:none; }
+.aeris :is(.btn,.cbi-button):focus:not(:focus-visible) { box-shadow:none; outline:none; border-color:var(--aeris-button-border,#d4d4d4)!important; }
+.aeris :is(.btn.primary,.btn.plain,.btn.danger,.cbi-button-apply,.cbi-button-positive,.cbi-button-add,.cbi-button-action,.cbi-button-reset,.cbi-button-remove) { --aeris-button-border:transparent; }
+.aeris :is(.ae-card-head,.au-card-heading,.rd-list-heading,.rd-section-heading,.aeris-component-card) h3,
+.aeris :is(.cbi-section,.cbi-tblsection) > h3 { font-size:var(--aeris-card-title-size); line-height:var(--aeris-card-title-line); font-weight:var(--aeris-card-title-weight); letter-spacing:-.3px; }
+.aeris :is(.aeris-icon-button,.rd-action-menu > summary) { transition:background-color .15s,color .15s; }
+.aeris :is(.aeris-icon-button,.rd-action-menu > summary):hover { background:var(--aeris-control); color:var(--aeris-accent); border-color:transparent!important; box-shadow:none; }
+.aeris :is(.btn,.aeris-icon-button) > :is(.ae-icon,.au-icon,svg) { transition:transform .15s; }
+.aeris :is(.btn,.aeris-icon-button):active:not(:disabled) > :is(.ae-icon,.au-icon,svg) { transform:scale(.92); }
+@media(prefers-reduced-motion:reduce) { .aeris *, .aeris *::before, .aeris *::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+
+/* Native LuCI tabs use the same flat underline treatment. */
+.aeris :is(.tabs,.cbi-tabmenu) { flex-wrap:nowrap; overflow-x:auto; }
+.aeris :is(.tabs,.cbi-tabmenu) > li { max-width:none; flex:0 0 auto; }
+.aeris :is(.tabs,.cbi-tabmenu) > li:is(:hover,:not(.active)) { background:none; box-shadow:none; }
+.aeris :is(.tabs,.cbi-tabmenu) > li > a:focus-visible { outline-offset:-4px; }

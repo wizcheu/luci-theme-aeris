@@ -2,10 +2,11 @@
   "name": "luci-theme-aeris",
   "version": "1.0.2",
   "private": true,
-  "description": "Aeris local design preview. No npm runtime dependencies.",
+  "description": "Aeris theme and captured native LuCI preview. No npm runtime dependencies.",
   "scripts": {
-    "preview": "python3 scripts/preview.py",
-    "test": "python3 -m unittest discover -s tests -p \"test_*.py\" -v && node --test tests/stats.test.cjs",
+    "preview": "python3 scripts/mirror.py --port 8099",
+    "preview:design": "python3 scripts/preview.py --port 8098",
+    "test": "python3 -m unittest discover -s tests -p \"test_*.py\" -v && node --test tests/*.test.cjs",
     "build": "python3 scripts/build.py"
   }
 }

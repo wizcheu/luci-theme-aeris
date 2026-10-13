@@ -37,6 +37,8 @@ return baseclass.extend({
   var groups = ui.menu.getChildren(activeMode);
   groups.forEach(function(group) {
    var children = ui.menu.getChildren(group);
+   // Keep the overview first even when LuCI still has a previous menu cached.
+   if (group.name === 'status') children.sort(function(a, b) { return (b.name === 'aeris') - (a.name === 'aeris'); });
    var selected = L.env.dispatchpath[1] === group.name;
    var path = activeMode.name + '/' + group.name;
    if (!children.length) {

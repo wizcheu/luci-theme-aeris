@@ -16,12 +16,12 @@
 .aeris .aeris-select-trigger { display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; min-height:48px; height:48px; padding:10px 13px; border:1px solid var(--aeris-control-border); border-radius:12px; background:var(--aeris-control); color:var(--aeris-foreground); font:600 14px/1.5 var(--font-sans); text-align:left; cursor:pointer; box-shadow:none; }
 .aeris-select-caption { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .aeris-select-trigger > .aeris-control-icon { width:17px; height:17px; color:var(--aeris-muted); }
-.aeris .aeris-select-trigger[aria-expanded="true"] { border-color:#2a85ff; background:var(--aeris-background); outline:0; }
+.aeris .aeris-select-trigger[aria-expanded="true"] { border-color:var(--aeris-primary); background:var(--aeris-background); outline:0; }
 .aeris .aeris-select-trigger:disabled { cursor:not-allowed; opacity:.45; }
 .aeris .aeris-select--xs .aeris-select-trigger { height:32px; min-height:32px; padding:4px 10px; font-size:12px; border-radius:9px; }
 .aeris .aeris-select--sm .aeris-select-trigger { height:40px; min-height:40px; padding:7px 12px; font-size:13px; }
 .aeris .aeris-select--lg .aeris-select-trigger { height:56px; min-height:56px; padding:12px 16px; font-size:16px; }
-.aeris-select-popup { position:fixed; z-index:1000; overflow:auto; padding:6px; border:1px solid var(--aeris-border); border-radius:13px; background:var(--aeris-background); color:var(--aeris-foreground); box-shadow:0 10px 30px #0002; }
+.aeris-select-popup { position:fixed; z-index:1000; overflow:auto; padding:6px; border:1px solid var(--aeris-border); border-radius:12px; background:var(--aeris-background); color:var(--aeris-foreground); box-shadow:0 10px 30px #0002; }
 .aeris-select-option { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:42px; padding:10px 12px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:550; }
 .aeris-select-option > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .aeris-select-option:is(:hover,.is-focused):not([aria-disabled="true"]) { background:var(--aeris-control); }

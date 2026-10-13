@@ -1,0 +1,33 @@
+/* Shared Segment and Select. Ecme: 4px track padding, 12px corners, 48px medium. */
+.aeris-control-icon { width:18px; height:18px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.aeris-segment { display:inline-flex; align-items:stretch; gap:8px; max-width:100%; padding:4px; border-radius:12px; background:var(--aeris-control); vertical-align:middle; }
+.aeris .aeris-segment-item { display:inline-flex; justify-content:center; align-items:center; gap:7px; flex:1 0 auto; min-width:0; height:40px; padding:8px 20px; margin:0; border:0; border-radius:12px; background:transparent; color:var(--aeris-muted); font:600 14px/1.4 var(--font-sans); white-space:nowrap; cursor:pointer; box-shadow:none; text-shadow:none; transition:background-color .15s,color .15s,box-shadow .15s; }
+.aeris .aeris-segment-item:hover:not(:disabled) { color:var(--aeris-foreground); }
+.aeris .aeris-segment-item:is([aria-checked="true"],[aria-pressed="true"]) { color:var(--aeris-foreground); background:var(--aeris-background); box-shadow:0 1px 3px #0000001a,0 1px 2px -1px #0000001a; }
+.aeris .aeris-segment-item:disabled { opacity:.4; cursor:not-allowed; }
+.aeris-segment--block { display:flex; width:100%; }
+.aeris .aeris-segment--xs .aeris-segment-item { height:24px; padding:3px 10px; font-size:12px; border-radius:8px; }
+.aeris .aeris-segment--sm .aeris-segment-item { height:32px; padding:5px 14px; font-size:13px; border-radius:10px; }
+.aeris .aeris-segment--lg .aeris-segment-item { height:48px; padding:10px 24px; font-size:16px; }
+.aeris-segment-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--aeris-primary); }
+.aeris-segment-dot.upload { background:#48b79b; }
+.aeris-select { display:inline-block; min-width:0; vertical-align:middle; }
+.aeris-select--block { display:block; width:100%; }
+.aeris .aeris-select-trigger { display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; min-height:48px; height:48px; padding:10px 13px; border:1px solid var(--aeris-control-border); border-radius:12px; background:var(--aeris-control); color:var(--aeris-foreground); font:600 14px/1.5 var(--font-sans); text-align:left; cursor:pointer; box-shadow:none; }
+.aeris-select-caption { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.aeris-select-trigger > .aeris-control-icon { width:17px; height:17px; color:var(--aeris-muted); }
+.aeris .aeris-select-trigger[aria-expanded="true"] { border-color:#2a85ff; background:var(--aeris-background); outline:0; }
+.aeris .aeris-select-trigger:disabled { cursor:not-allowed; opacity:.45; }
+.aeris .aeris-select--xs .aeris-select-trigger { height:32px; min-height:32px; padding:4px 10px; font-size:12px; border-radius:9px; }
+.aeris .aeris-select--sm .aeris-select-trigger { height:40px; min-height:40px; padding:7px 12px; font-size:13px; }
+.aeris .aeris-select--lg .aeris-select-trigger { height:56px; min-height:56px; padding:12px 16px; font-size:16px; }
+.aeris-select-popup { position:fixed; z-index:1000; overflow:auto; padding:6px; border:1px solid var(--aeris-border); border-radius:13px; background:var(--aeris-background); color:var(--aeris-foreground); box-shadow:0 10px 30px #0002; }
+.aeris-select-option { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:42px; padding:10px 12px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:550; }
+.aeris-select-option > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.aeris-select-option:is(:hover,.is-focused):not([aria-disabled="true"]) { background:var(--aeris-control); }
+.aeris-select-option[aria-selected="true"] { color:var(--aeris-accent); }
+.aeris-select-option[aria-disabled="true"] { opacity:.4; cursor:not-allowed; }
+.aeris-select-option .aeris-control-icon { width:17px; height:17px; }
+:root[data-darkmode="true"] .aeris .aeris-segment-item:is([aria-checked="true"],[aria-pressed="true"]) { background:#4b5059; }
+:root[data-darkmode="true"] .aeris-select-popup { box-shadow:0 12px 32px #0005; }
+@media(prefers-reduced-motion:reduce) { .aeris .aeris-segment-item { transition:none; } }

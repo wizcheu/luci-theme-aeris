@@ -92,7 +92,7 @@ header.aeris-topbar { position:sticky; top:0; z-index:40; height:72px; min-heigh
 .aeris-user { display:flex; align-items:center; gap:10px; font-size:12px; padding-left:14px; border-left:1px solid var(--aeris-border); }
 .aeris-avatar { display:grid; place-items:center; width:36px; height:36px; background:var(--aeris-purple-soft); color:var(--aeris-purple); border-radius:50%; font-weight:650; }
 #indicators { display:flex; gap:8px; align-items:center; font-size:12px; }
-.aeris-topbar #indicators > [data-indicator] { border-radius:10px; padding:7px 10px; box-shadow:none; }
+.aeris-topbar #indicators > [data-indicator] { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:8px 20px; border-radius:12px; font-size:14px; line-height:22px; font-weight:600; box-shadow:none; }
 #maincontent.container { flex:1; width:100%; max-width:1600px; min-width:0; margin:0 auto; padding:30px 32px 40px; }
 #maincontent:focus { outline:0; }
 footer.aeris-footer { display:flex; justify-content:space-between; gap:16px; margin:0 32px; padding:20px 0; width:auto; max-width:none; border-top:1px solid var(--aeris-border); background:transparent; color:var(--aeris-muted); font-size:11px; }
@@ -235,10 +235,11 @@ footer.aeris-footer { display:flex; justify-content:space-between; gap:16px; mar
 .aeris .control-group > :is(input,select) { flex:1; min-width:0; width:100%; margin:0; }
 .aeris .control-group > :is(input,select):has(~ :is(button,.cbi-button)) { border-radius:12px 0 0 12px; }
 .aeris .control-group > :is(input,select) ~ :is(button,.cbi-button) { min-height:48px; flex:0 0 auto; margin:0; padding:10px 14px; border:1px solid var(--aeris-control-border); border-left:0; border-radius:0 12px 12px 0; background:var(--aeris-control); color:var(--aeris-muted); }
-#localtime + br + .control-group { margin-top:12px; }
+#localtime + br { display:none; }
+#localtime + br + .control-group { margin-top:0; }
 .aeris .cbi-dynlist { display:flex; flex-direction:column; gap:8px; max-width:100%; min-width:0; }
-.aeris .cbi-dynlist > .item { position:relative; min-height:44px; margin:0; padding:9px 46px 9px 14px; border:0; border-radius:10px; background:var(--aeris-control); color:var(--aeris-foreground); box-shadow:none; }
-.aeris .cbi-dynlist > .item::after { width:40px; border:0; border-radius:0 10px 10px 0; padding:0; background:none; color:var(--aeris-muted); }
+.aeris .cbi-dynlist > .item { position:relative; min-height:48px; margin:0; padding:12px 60px 12px 14px; border:0; border-radius:12px; background:var(--aeris-control); color:var(--aeris-foreground); box-shadow:none; }
+.aeris .cbi-dynlist > .item::after { display:flex; align-items:center; justify-content:center; top:0; right:0; bottom:0; width:48px; border:0; border-radius:0 12px 12px 0; padding:0; background:none; color:var(--aeris-muted); }
 .aeris .cbi-dynlist > .item:hover::after { background:var(--aeris-hover); box-shadow:none; }
 .aeris .cbi-dynlist > .add-item { width:100%; }
 /* An action beside a field shares the field's height, including wrapped rows. */
@@ -293,7 +294,7 @@ body.aeris-auth { display:grid; place-items:center; background:var(--aeris-backg
 :root[data-darkmode="true"] .aeris input.aeris-switch:not(:checked)::before,:root[data-darkmode="true"] .aeris .cbi-checkbox input[type="checkbox"]:not(:checked)::before { background:#555861; }
 .aeris .control-group:has(> input:focus) { border-radius:12px; background:var(--aeris-background); box-shadow:0 0 0 2px var(--aeris-primary); }
 .aeris .control-group > input:focus { box-shadow:none; outline:none; border-color:transparent!important; }
-.aeris .control-group:has(> input:focus) > :is(button,.cbi-button) { background:var(--aeris-background); border-color:transparent; }
+.aeris .control-group:has(> input:focus) > :is(button,.cbi-button) { background:var(--aeris-subtle); border-color:transparent; border-left:1px solid var(--aeris-control-border); color:var(--aeris-foreground); }
 
 .aeris .ifacebox .ifacebox-head.active { background:var(--aeris-blue-soft); color:var(--aeris-accent); }
 
