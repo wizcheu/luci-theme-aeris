@@ -19,8 +19,7 @@
 .aeris .ap-page-content h4 { font-size:16px; font-weight:650; margin:4px 0 0; }
 .ap-page-content .au-card-body > .ap-muted:first-child { margin:0 0 20px; }
 .ap-page-content .au-card-body > .au-search { margin-bottom:24px; }
-.ap-page-content > .au-tabs > .au-tab-list { margin-bottom:26px; }
-.ap-page-content .au-tabs .au-tabs > .au-tab-list { margin-bottom:24px; }
+.ap-page-content .au-tabs:not(.au-tabs-vertical) > .au-tab-list { margin-bottom:24px; }
 .ap-page-content .au-tab-list { scrollbar-width:none; }
 .ap-page-content .au-tab-list::-webkit-scrollbar { display:none; }
 .ap-page-content .au-tab-panels { padding-top:0; }

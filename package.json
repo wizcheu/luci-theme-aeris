@@ -1,6 +1,6 @@
 {
   "name": "luci-theme-aeris",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Aeris local design preview. No npm runtime dependencies.",
   "scripts": {
