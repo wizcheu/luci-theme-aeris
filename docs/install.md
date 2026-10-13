@@ -2,7 +2,7 @@
 
 ## 安装前确认
 
-Aeris 1.0.0 需要 ucode 版 LuCI。通过 SSH 检查：
+Aeris 1.0.1 需要 ucode 版 LuCI。通过 SSH 检查：
 
 ```sh
 test -f /usr/share/ucode/luci/runtime.uc && echo 'ucode LuCI available'
@@ -35,7 +35,7 @@ uci -q get luci.main.mediaurlbase
 ```sh
 cd /tmp
 opkg update
-opkg install ./luci-theme-aeris_1.0.0-r1_all.ipk
+opkg install ./luci-theme-aeris_1.0.1-r1_all.ipk
 ```
 
 不要使用 `--force-depends` 绕过缺失依赖。如果固件源没有依赖包，应先解决固件源与版本不匹配的问题。
@@ -47,7 +47,7 @@ opkg install ./luci-theme-aeris_1.0.0-r1_all.ipk
 ```sh
 cd /tmp
 apk update
-apk add --allow-untrusted ./luci-theme-aeris-1.0.0-r1.apk
+apk add --allow-untrusted ./luci-theme-aeris-1.0.1-r1.apk
 ```
 
 该主题是第三方 Release 附件，未由设备内置的 OpenWrt 官方密钥签名，因此本次本地安装需要 `--allow-untrusted`。不要把 `.ipk` 改扩展名后交给 apk，也不要用于 Alpine Linux 或 Android。

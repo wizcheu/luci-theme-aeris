@@ -121,6 +121,15 @@ p.write_text(json.dumps(s))
                 self.assertEqual(data["luci.themes.Argon"], "/luci-static/argon")
                 self.assertEqual(data.get("luci.main.mediaurlbase"), current if current.endswith("argon") else None)
 
+    def test_upgrade_does_not_reset_the_selected_theme(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            state, env = self.uci_environment(directory)
+            initial = {"luci.main.mediaurlbase": "/luci-static/aeris", "luci.themes.Aeris": "/luci-static/aeris"}
+            state.write_text(json.dumps(initial))
+            subprocess.run(["sh", "-s", "--", "upgrade"], input=self.control["postrm"][0], env=env, check=True)
+            self.assertEqual(json.loads(state.read_text()), initial)
+
 
 if __name__ == "__main__":
     unittest.main()

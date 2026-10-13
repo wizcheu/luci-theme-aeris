@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-theme-aeris
-PKG_VERSION:=1.0.0
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 PKG_LICENSE:=Apache-2.0
 PKG_MAINTAINER:=wizcheu
@@ -26,6 +26,7 @@ endef
 
 define Package/luci-theme-aeris/postrm
 #!/bin/sh
+[ "$$1" = upgrade ] && exit 0
 [ -n "$${IPKG_INSTROOT}" ] || {
 	if [ "$$(uci -q get luci.main.mediaurlbase)" = /luci-static/aeris ]; then
 		uci -q delete luci.main.mediaurlbase

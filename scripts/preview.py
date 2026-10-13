@@ -9,6 +9,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "preview/routes.json").read_text())
 PAGES = {"/": "status-aeris", "/cgi-bin/luci": "status-aeris", "/cgi-bin/luci/admin": "status-aeris",
+         "/native-regression": "native-regression",
          "/cgi-bin/luci/admin/logout": "login", "/login": "login", "/login-error": "login-error"}
 for group in CATALOG["groups"]:
     PAGES["/cgi-bin/luci/admin/" + group["id"]] = group["pages"][0]["file"]

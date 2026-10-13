@@ -3,7 +3,7 @@
 用户使用：
 
 - [安装、启用、升级与恢复](install.md)
-- [v1.0.0 发布说明](release-notes.md)
+- [v1.0.1 发布说明](release-notes.md)
 
 维护与开发：
 

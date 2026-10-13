@@ -16,6 +16,8 @@
  <script src="/luci-static/aeris/controls.js"></script>
  <link rel="stylesheet" href="/luci-static/aeris/ui.css">
  <script src="/luci-static/aeris/ui.js"></script>
+ <link rel="stylesheet" href="/luci-static/aeris/native.css">
+ <script defer src="/luci-static/aeris/native.js"></script>
  <link rel="icon" href="/luci-static/aeris/mark.svg" type="image/svg+xml">
  <script src="/cgi-bin/luci/admin/translations/zh-cn"></script>
  <script src="/luci-static/resources/cbi.js"></script>
@@ -28,7 +30,13 @@
    <span class="aeris-mark" aria-hidden="true"></span>
    <span><strong>Aeris<span class="aeris-brand-dot">.</span></strong><small>OpenWrt 控制中心</small></span>
   </a>
-  <div class="aeris-nav-search"><input id="aeris-menu-search" type="search" placeholder="搜索菜单…" aria-label="搜索菜单…" autocomplete="off"></div>
+  <div class="aeris-nav-search">
+   <form id="aeris-menu-search-form" class="aeris-menu-search-form" role="search" autocomplete="off">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+    <input id="aeris-menu-search" name="aeris-menu-query" type="search" placeholder="搜索菜单…" aria-label="搜索菜单" autocomplete="off" autocapitalize="none" spellcheck="false" data-lpignore="true" data-1p-ignore readonly>
+    <button id="aeris-menu-search-clear" type="button" aria-label="清空菜单搜索" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
+   </form>
+  </div>
   <div class="aeris-nav-caption">WORKSPACE</div>
   <nav id="aeris-navigation" aria-label="主菜单"><span class="aeris-menu-loading">正在加载…</span></nav>
   <div id="aeris-menu-empty" class="aeris-menu-empty" hidden>没有匹配的菜单</div>
@@ -48,7 +56,7 @@
 <div id="aeris-preview-dashboard"><p class="aeris-muted">正在加载网络概览…</p></div>
 <script defer src="/preview/dashboard-demo.js"></script>
   </main>
-  <footer class="aeris-footer"><span>Aeris 1.0.0 <span aria-hidden="true">·</span> <a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">LuCI</a></span><span>OpenWrt 24.10.5</span></footer>
+  <footer class="aeris-footer"><span>Aeris 1.0.1 <span aria-hidden="true">·</span> <a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">LuCI</a></span><span>OpenWrt 24.10.5</span></footer>
  </div>
  <script>L.require('menu-aeris').catch(function(error) { var target = document.getElementById('aeris-navigation'); target.textContent = error.message || String(error); });</script>
 </body>

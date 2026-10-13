@@ -99,6 +99,7 @@ exit 0
 """
     postrm = """#!/bin/sh
 [ -n "$IPKG_INSTROOT" ] && exit 0
+[ "$1" = upgrade ] && exit 0
 if [ "$(uci -q get luci.main.mediaurlbase)" = /luci-static/aeris ]; then
     uci -q delete luci.main.mediaurlbase
 fi

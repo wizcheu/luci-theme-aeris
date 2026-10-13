@@ -1,12 +1,12 @@
 # Aeris
 
-Aeris 是一个面向 **ucode 版 LuCI** 的 OpenWrt 主题。提供浅色与深色外观、可收起侧栏、菜单搜索、手机导航，以及读取真实设备状态的网络概览。首个发布版本为 **1.0.0**。
+Aeris 是一个面向 **ucode 版 LuCI** 的 OpenWrt 主题。提供浅色与深色外观、可收起侧栏、菜单搜索、手机导航，以及读取真实设备状态的网络概览。当前版本为 **1.0.1**。
 
 [下载安装包](https://github.com/wizcheu/luci-theme-aeris/releases/latest) · [安装与恢复](docs/install.md) · [构建与发布](docs/releasing.md) · [文档目录](docs/README.md)
 
 ## 发布范围
 
-安装包包含主题外壳、登录页、通用 LuCI 控件样式和 Aeris 概览。概览通过只读 RPC 展示 WAN 流量、内存、网络接口、设备信息和 IPv4 DHCP 租约；流量历史从打开页面后开始采样，DHCP 租约不等同于设备在线状态。
+安装包包含主题外壳、登录页、通用 LuCI 控件样式和网络概览。概览通过只读 RPC 展示 WAN 流量、内存、网络接口、设备信息和 IPv4 DHCP 租约；流量历史从打开页面后开始采样，DHCP 租约不等同于设备在线状态。
 
 系统、网络与服务配置继续由原生 LuCI 表单处理。`preview/` 中重排的 30 个管理页面是独立的交互设计样板，**不包含在安装包中，也没有接入真实配置写入**。详见[设计覆盖清单](docs/backend-coverage.md)。当前不宣称所有第三方插件已完成真机兼容性验证。
 
@@ -14,8 +14,8 @@ Aeris 是一个面向 **ucode 版 LuCI** 的 OpenWrt 主题。提供浅色与深
 
 | 设备环境 | 下载文件 |
 | --- | --- |
-| 使用 `opkg` 且安装了 ucode LuCI，例如 OpenWrt 24.10 | `luci-theme-aeris_1.0.0-r1_all.ipk` |
-| 使用 `apk` 的 OpenWrt 25.12 | `luci-theme-aeris-1.0.0-r1.apk` |
+| 使用 `opkg` 且安装了 ucode LuCI，例如 OpenWrt 24.10 | `luci-theme-aeris_1.0.1-r1_all.ipk` |
+| 使用 `apk` 的 OpenWrt 25.12 | `luci-theme-aeris-1.0.1-r1.apk` |
 | 旧版 Lua LuCI | 不支持 |
 
 这是主题软件包，不是固件，无需刷机。`all` 表示主题没有 CPU 架构相关的可执行文件；仍需满足上表的 LuCI 和包管理器要求。衍生固件以实际运行环境为准。

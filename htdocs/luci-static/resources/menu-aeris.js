@@ -46,12 +46,19 @@ return baseclass.extend({
    var details = E('details', { 'class': 'aeris-nav-group' });
    details.open = selected;
    var summary = E('summary', { 'class': 'aeris-nav-item' }, [this.icon(group.name), E('span', {}, _(group.title)), E('span', { 'class': 'aeris-chevron', 'aria-hidden': 'true' })]);
+   summary.addEventListener('click', function() {
+    if (!details.open) target.querySelectorAll('.aeris-nav-group[open]').forEach(function(other) {
+     if (other !== details) other.open = false;
+    });
+   });
    var list = E('ul', { 'class': 'aeris-nav-children' });
    children.forEach(function(child) {
     var active = selected && L.env.dispatchpath[2] === child.name;
     var attrs = { 'href': L.url(path, child.name) };
     if (active) attrs['aria-current'] = 'page';
-    list.appendChild(E('li', {}, E('a', attrs, _(child.title))));
+    // Older LuCI sessions may cache menu titles across a package upgrade.
+    var title = path + '/' + child.name === 'admin/status/aeris' ? '网络概览' : _(child.title);
+    list.appendChild(E('li', {}, E('a', attrs, title)));
    });
    details.append(summary, list);
    target.appendChild(details);
@@ -67,7 +74,7 @@ return baseclass.extend({
   L.env.dispatchpath.forEach(function(segment, index) {
    node = node && node.children && node.children[segment];
    url += (url ? '/' : '') + segment;
-   if (node && index > 0 && node.title) crumbs.push(E('a', { 'href': L.url(url) }, _(node.title)));
+   if (node && index > 0 && node.title) crumbs.push(E('a', { 'href': L.url(url) }, url === 'admin/status/aeris' ? '网络概览' : _(node.title)));
   });
   if (breadcrumb && crumbs.length) { breadcrumb.replaceChildren.apply(breadcrumb, crumbs); crumbs[crumbs.length - 1].setAttribute('aria-current', 'page'); }
   node = tree; url = '';
@@ -101,11 +108,14 @@ return baseclass.extend({
 
  bindSearch: function(target) {
   var input = document.getElementById('aeris-menu-search');
+  var form = document.getElementById('aeris-menu-search-form');
+  var clear = document.getElementById('aeris-menu-search-clear');
   var empty = document.getElementById('aeris-menu-empty');
   if (!input) return;
   var previousOpen = new Map();
-  input.addEventListener('input', function() {
+  function filter() {
    var query = input.value.trim().toLocaleLowerCase();
+   if (clear) clear.hidden = !query;
    var visible = 0;
    target.querySelectorAll('.aeris-nav-group').forEach(function(group) {
     if (query && !previousOpen.has(group)) previousOpen.set(group, group.open);
@@ -126,6 +136,29 @@ return baseclass.extend({
     if (!link.hidden) visible++;
    });
    if (empty) empty.hidden = visible > 0;
+  }
+  // Search is a separate form, never the username field of a password form.
+  // The initial readonly attribute also blocks eager password-manager filling.
+  input.addEventListener('focus', function() { input.readOnly = false; });
+  input.addEventListener('blur', function() { input.readOnly = true; });
+  function isAutofilled() {
+   try { return input.matches(':autofill') || input.matches(':-webkit-autofill'); }
+   catch (_) { return false; }
+  }
+  function clearSearch() { input.value = ''; filter(); }
+  input.addEventListener('input', function() {
+   if (document.activeElement !== input || isAutofilled()) clearSearch();
+   else filter();
   });
+  input.addEventListener('animationstart', function(event) {
+   if (event.animationName === 'aeris-search-autofill') clearSearch();
+  });
+  input.addEventListener('keydown', function(event) {
+   if (event.key === 'Escape') { event.preventDefault(); clearSearch(); }
+  });
+  if (form) form.addEventListener('submit', function(event) { event.preventDefault(); });
+  if (clear) clear.addEventListener('click', function() { clearSearch(); input.focus(); });
+  window.addEventListener('pageshow', clearSearch);
+  clearSearch();
  }
 });

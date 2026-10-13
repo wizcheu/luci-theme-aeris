@@ -46,6 +46,14 @@ for (let group in catalog.groups) {
  }
 }
 // Keep earlier direct preview URLs aligned with the current page catalog.
+env.ctx.request_path = ['admin', 'status', 'realtime', 'bandwidth'];
+env.dispatched.title = '原生组件回归';
+fs.writefile('preview/generated/native-regression.html', render(function() {
+ env.include('header');
+ print(fs.readfile('preview/native-regression.html'));
+ env.include('footer');
+}));
+
 const aliases = { overview: 'status-aeris', native: 'status-overview', system: 'system-system', network: 'network-network', components: 'status-components' };
 for (let name, target in aliases)
  fs.writefile(`preview/generated/${name}.html`, fs.readfile(`preview/generated/${target}.html`));
